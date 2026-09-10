@@ -1,4 +1,4 @@
-<title>Nine Days to CCAR-F</title>
+<title>Three Roads to CCAR-F</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
@@ -196,6 +196,46 @@ pre u{text-decoration:none; background:var(--accent-soft); border-radius:2px; pa
   border-radius:var(--r); padding:14px 17px; margin:16px 0; font-size:14.5px; color:var(--txt2)}
 .note b{color:var(--txt); font-family:var(--display); font-size:13.5px}
 
+
+/* ---------- placement & tracks ---------- */
+.place{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:18px 20px; margin-bottom:24px}
+.place h3{font-size:17px; margin-bottom:5px}
+.place p{margin:0 0 14px; font-size:14.5px; color:var(--txt2); max-width:70ch}
+.axes{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px}
+@media (max-width:700px){.axes{grid-template-columns:1fr}.place table{font-size:12px}}
+.axis{border-left:3px solid var(--slate); padding-left:13px}
+.axis h4{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--txt3); font-weight:500}
+.axis ol{margin:8px 0 0; padding-left:20px; font-size:14px; color:var(--txt2)}
+.axis li{margin-bottom:4px}
+.axis code{font-size:.8em}
+.place table{width:100%; border-collapse:collapse; font-size:13.5px}
+.place th{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--txt3);
+  text-align:left; font-weight:500; padding:7px 10px 7px 0; border-bottom:1px solid var(--line)}
+.place td{padding:8px 10px 8px 0; border-bottom:1px solid var(--line); color:var(--txt2); vertical-align:top}
+.place td:first-child{font-family:var(--mono); color:var(--txt); white-space:nowrap}
+.place td b{font-family:var(--display); color:var(--txt)}
+
+.tsel{display:flex; gap:2px; margin-bottom:20px; border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--line); flex-wrap:wrap}
+.tsel button{flex:1 1 150px; background:var(--surface); border:0; cursor:pointer; padding:11px 13px; text-align:left;
+  font-family:var(--display); font-size:13.5px; font-weight:600; color:var(--txt2)}
+.tsel button span{display:block; font-family:var(--mono); font-size:10.5px; font-weight:400; color:var(--txt3); margin-top:3px; letter-spacing:.04em}
+.tsel button[aria-pressed="true"]{background:var(--accent-soft); color:var(--accent)}
+.tsel button[aria-pressed="true"] span{color:var(--accent)}
+
+.thead{border-left:3px solid var(--accent); padding:2px 0 2px 15px; margin-bottom:18px}
+.thead h2{font-size:21px; margin-bottom:6px}
+.thead p{margin:0 0 8px; font-size:15px; color:var(--txt2); max-width:70ch}
+.thead .runway{font-family:var(--mono); font-size:11.5px; color:var(--txt3); letter-spacing:.04em}
+.tnotes{display:flex; flex-direction:column; gap:10px; margin-bottom:22px}
+.tnote{border:1px solid var(--line); border-left:3px solid var(--brass); border-radius:var(--r);
+  background:var(--surface); padding:13px 16px; font-size:14.5px; color:var(--txt2)}
+.tnote b{font-family:var(--display); color:var(--txt); font-size:13.5px}
+.tnote.warn{border-left-color:var(--bad)}
+.gate{margin-top:12px; padding:11px 14px; border:1px dashed var(--line); border-radius:var(--r);
+  font-size:14px; color:var(--txt2); background:var(--bg)}
+.gate b{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--good)}
+.dur{font-family:var(--mono); font-size:11px; color:var(--txt3)}
+
 footer{border-top:1px solid var(--line); margin-top:44px; padding-top:20px; font-size:13px; color:var(--txt3)}
 footer p{margin:0 0 7px; max-width:74ch}
 </style>
@@ -203,11 +243,11 @@ footer p{margin:0 0 7px; max-width:74ch}
 <header class="mast">
   <div class="mast-in">
     <div class="brand">
-      <h1>Nine Days to CCAR-F</h1>
+      <h1>Three Roads to CCAR-F</h1>
       <p>Claude Certified Architect &ndash; Foundations</p>
     </div>
     <div class="count">
-      <div><span class="n">9</span><span class="l">Study days</span></div>
+      <div><span class="n">4/6</span><span class="l">Scenarios drawn</span></div>
       <div><span class="n">720</span><span class="l">Cut / 1000</span></div>
       <div><span class="n">60</span><span class="l">Items / 120 min</span></div>
     </div>
@@ -226,7 +266,42 @@ footer p{margin:0 0 7px; max-width:74ch}
 
 <!-- ============ PLAN ============ -->
 <section id="p-plan">
-  <p class="lede">Nine study days, counted from wherever you start. Time is allocated by domain weight multiplied by how far the material sits from what you already do. Domain&nbsp;1 takes three of them. Everything is covered by Day&nbsp;7 so the last two days are mocks and repair.</p>
+  <div class="place">
+    <h3>Place yourself first</h3>
+    <p>This exam measures two independent things, and most preparation advice collapses them into one. Score yourself on both axes, then take the track the table gives you &mdash; not the one your job title suggests.</p>
+    <div class="axes">
+      <div class="axis">
+        <h4>Axis A &middot; Claude Code fluency</h4>
+        <ol>
+          <li><b>A0</b> &mdash; I have not used Claude Code</li>
+          <li><b>A1</b> &mdash; I use it most days, GUI or CLI</li>
+          <li><b>A2</b> &mdash; I author skills, commands, hooks or MCP config others rely on</li>
+        </ol>
+      </div>
+      <div class="axis">
+        <h4>Axis B &middot; Programmatic building</h4>
+        <ol>
+          <li><b>B0</b> &mdash; I have never called an LLM API from code</li>
+          <li><b>B1</b> &mdash; I have called the API and handled a <code>tool_use</code> response</li>
+          <li><b>B2</b> &mdash; I have shipped an agent using subagents or hooks</li>
+        </ol>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>You are</th><th>Track</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>A0 &middot; any B</td><td><b>Beginner</b></td><td>Claude Code fluency is 20% of the exam and the foundation for reading everything else. There is no way past it.</td></tr>
+        <tr><td>A1 &middot; B0</td><td><b>Experienced</b></td><td>Domain 3 is close. Domains 1, 2 and 4 &mdash; 65% &mdash; need hands on the API, and one build session is worth days of reading.</td></tr>
+        <tr><td>A1 &middot; B1&ndash;B2</td><td><b>Experienced</b>, compressible</td><td>Both axes are covered. Skip the build days and go straight to precision and drilling.</td></tr>
+        <tr><td>A2 &middot; B0</td><td><b>Expert</b>, build day kept</td><td>The common mismatch. Domain 3 needs only a precision pass, but the 27% domain still has to be built once, not just read.</td></tr>
+        <tr><td>A2 &middot; B1&ndash;B2</td><td><b>Expert</b>, five-day option</td><td>Your gaps are recall and exam house-style, not concepts. Diagnose first, study only what the diagnostic exposes.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="tsel" id="tsel"></div>
+  <div id="thead"></div>
+  <div id="tnotes" class="tnotes"></div>
   <div class="split">
     <div class="rail" id="rail"></div>
     <div id="daypanel"></div>
@@ -301,7 +376,7 @@ footer p{margin:0 0 7px; max-width:74ch}
   <div class="drillbar">
     <select id="fdom"><option value="">All domains</option></select>
     <select id="fscen"><option value="">All scenarios</option></select>
-    <select id="fmode"><option value="">All items</option><option value="unseen">Unanswered only</option><option value="wrong">Previously wrong</option></select>
+    <select id="fmode"><option value="">All items</option><option value="unseen">Unanswered only</option><option value="wrong">Previously wrong</option><option value="diag">Diagnostic (15)</option></select>
     <button class="btn quiet" id="reset">Reset answers</button>
     <span class="score" id="score"></span>
   </div>
@@ -323,62 +398,220 @@ footer p{margin:0 0 7px; max-width:74ch}
 
 <script>
 /* ============================ DATA ============================ */
-const DAYS = [
- {n:1, short:"Heuristics", title:"Heuristics, then Domain 3 cold", ts:["3.1","3.2","3.3","3.4","3.5","3.6"], tasks:[
-   "Read the eight heuristics until you can state each one without looking. This is the highest-yield hour of the nine days.",
-   "Cold-recall pass on Claude Code: write out from memory the three CLAUDE.md scopes, what <code>@import</code> does, the frontmatter keys a SKILL.md accepts, and every CLI flag you know. Then check yourself against the Blueprint tab.",
-   "Learn the three invented-API distractors by heart. They are free marks.",
-   "Drill every Domain 3 item. Aim to finish the day above 80% on your strongest domain."]},
- {n:2, short:"The loop", title:"Agentic loop and decomposition", ts:["1.1","1.6"], tasks:[
-   "Read the Lab tab. Trace the loop line by line until you can say why <code>stop_reason</code> drives it and text content never does.",
-   "Write the loop out on paper from memory. Include how tool results re-enter the conversation and with which role.",
-   "Learn the three loop anti-patterns: parsing natural language for completion, iteration caps as the primary stop, checking assistant text.",
-   "Fixed pipeline versus adaptive decomposition &mdash; be able to give one example of each from the six scenarios.",
-   "Drill Domain 1 items tagged 1.1 and 1.6."]},
- {n:3, short:"Orchestration", title:"Orchestration and context passing", ts:["1.2","1.3"], tasks:[
-   "Hub-and-spoke: know the three things routing through the coordinator buys you, and be able to name them fast.",
-   "Commit this to memory: subagents inherit nothing. Context must be in the prompt. This single fact answers a surprising number of items.",
-   "Know that <code>allowedTools</code> must include <code>Task</code>, and that parallel subagents mean several Task calls in one response, not several turns.",
-   "Understand why a coordinator prompt should carry goals and quality criteria rather than step-by-step procedure.",
-   "Drill items tagged 1.2 and 1.3."]},
- {n:4, short:"Hooks, sessions", title:"Hooks, enforcement, sessions", ts:["1.4","1.5","1.7"], tasks:[
-   "Hooks versus prompts: the deterministic-guarantee distinction. If a business rule must never break, a prompt cannot deliver it. Heuristic H1.",
-   "Know <code>PostToolUse</code> for normalising tool results on the way in, and tool-call interception for blocking actions on the way out.",
-   "Structured handoff: what an escalation summary must carry for a human who cannot see the transcript.",
-   "Sessions: <code>--resume</code> by name, <code>fork_session</code> for divergent branches, and when a fresh session with an injected summary beats resuming stale results.",
-   "Drill items tagged 1.4, 1.5 and 1.7. You have now covered all of the 27% domain."]},
- {n:5, short:"Prompt \u0026 output", title:"Prompt engineering and structured output", ts:["4.1","4.2","4.3","4.4","4.5","4.6"], tasks:[
-   "Explicit categorical criteria beat confidence language. &ldquo;Be conservative&rdquo; and &ldquo;only high-confidence findings&rdquo; do not work &mdash; know why.",
-   "Few-shot is the answer when the failure is inconsistency or ambiguity handling. Two to four targeted examples, not five to eight generic ones.",
-   "<code>tool_use</code> with a JSON schema for guaranteed structure. Know the three <code>tool_choice</code> modes cold, and that schemas kill syntax errors but never semantic ones.",
-   "Nullable and optional fields prevent fabrication. Enum plus <code>other</code> plus a detail string handles extensibility.",
+const TRACKS = {
+beginner:{
+ id:"beginner", name:"Beginner", tag:"A0 &middot; never used Claude Code", unit:"Phase",
+ runway:"~10 hours per week &middot; roughly 10&ndash;12 weeks",
+ who:"You have not used Claude or another AI tool for real work, and you do not write software. This track gets you to the starting line the other two tracks begin from.",
+ notes:[
+  {w:1, b:"This is not a nine-day path, and no honest plan makes it one.", t:"The exam asks you to read Python, reason about JSON Schema, and judge decisions about git, pull requests and CI pipelines. Those are prerequisites, not exam content &mdash; the guide assumes them and never teaches them. Compressing this costs you $125 and a fourteen-day lockout, so build the foundation first."},
+  {b:"Consider a lower rung first.", t:"Anthropic&rsquo;s certification program has four exams, including <b>Claude Certified Associate &ndash; Foundations</b> (CCAO-F) and <b>Claude Certified Developer &ndash; Foundations</b> (CCDV-F). CCAR-F is explicitly the <em>architect</em> track. Check whether an associate-level credential matches where you are &mdash; I have not sat it and cannot vouch for its difficulty, but it is worth ten minutes on the Partner Academy before committing here."},
+  {b:"Do not skip the gates.", t:"Each phase ends with a check you can either pass or not. Advancing past a gate you have not cleared is the single most common way this track fails &mdash; the later phases assume the earlier ones landed."}
+ ],
+ steps:[
+  {n:1, short:"Technical literacy", title:"Technical literacy", dur:"~3 weeks", ts:["prerequisite"], tasks:[
+   "Learn the command line until running a command with flags feels ordinary rather than alarming. You will meet <code>-p</code>, <code>--output-format json</code> and <code>--json-schema</code> on the exam and they must read as unremarkable.",
+   "Learn git and GitHub to the point you can clone, branch, commit, and explain what a pull request is. Two of the six exam scenarios are built entirely on CI/CD and pull request review.",
+   "Learn to read JSON, and what a JSON Schema constrains &mdash; required versus optional fields, types, enums, nullability. Domain 4 is 20% of the exam and much of it is schema design judgment.",
+   "Learn to <em>read</em> Python: functions, dicts, lists, loops, conditionals. You do not need to write it. You need to look at a twenty-five line loop and narrate what happens on each pass.",
+   "Learn what an API is: a request, a response, authentication, and why a response might come back saying it wants to call a tool before it can answer."],
+   gate:"Open the Lab tab and narrate the loop line by line, out loud, without guessing. If any line is opaque, stay in this phase."},
+  {n:2, short:"Live with Claude", title:"Live with Claude every day", dur:"~2 weeks", ts:["3.1","3.2","3.4"], tasks:[
+   "Use Claude daily for real work, not experiments. Notice where it does well unaided and where it needs context you forgot to give it &mdash; that intuition is what Domain 5 formalises.",
+   "Install Claude Code and use it every day on a small real repository. A toy project is fine; daily contact is the point.",
+   "Write a <code>CLAUDE.md</code>. Change it. Watch behaviour change. Run <code>/memory</code> and see exactly which files loaded.",
+   "Create one slash command in <code>.claude/commands/</code>, and one skill in <code>.claude/skills/</code> with frontmatter. Deliberately try <code>context: fork</code> and watch what does not land in your conversation.",
+   "Use plan mode on something genuinely tangled, and direct execution on a one-line fix. Feel the difference &mdash; Domain 3 asks you to choose between them under time pressure."],
+   gate:"You have a CLAUDE.md, a slash command and a skill that you wrote yourself, in a repository, all working."},
+  {n:3, short:"Build with the API", title:"Build with the API", dur:"~3 weeks", ts:["1.1","2.1","2.2","4.3"], tasks:[
+   "Make one API call from Python and print the whole response. Find <code>stop_reason</code> in it and read what it says.",
+   "Define one tool and call again. Watch <code>stop_reason</code> become <code>tool_use</code>. Read the block: its <code>id</code>, <code>name</code> and <code>input</code>.",
+   "Send the result back as a <code>tool_result</code> under the <code>user</code> role, with a matching <code>tool_use_id</code>. Call again. You have just completed one turn of the agentic loop by hand.",
+   "Now wrap it in a loop driven by <code>stop_reason</code>. Get it wrong first. This one exercise is the spine of the 27% domain and there is no substitute for having debugged it.",
+   "Add a second, similar tool with a thin one-line description. Watch the model pick the wrong one. Now rewrite both descriptions properly and watch it stop. That is Domain 2&rsquo;s central lesson, learned the honest way.",
+   "Return a structured error carrying <code>errorCategory</code> and <code>isRetryable</code>, and watch the agent recover differently than it did on a generic failure string.",
+   "Extract structured data using <code>tool_use</code> with a JSON schema. Mark a field required when the document lacks it, watch the model invent a value, then make it nullable and watch fabrication stop."],
+   gate:"You have an agent that loops on stop_reason, calls two distinct tools, and handles at least one error category deliberately."},
+  {n:4, short:"Subagents & hooks", title:"Subagents and hooks", dur:"~1&ndash;2 weeks", ts:["1.2","1.3","1.5"], tasks:[
+   "Spawn one subagent. Discover for yourself that it inherits nothing from the parent conversation, then pass its context explicitly in the prompt.",
+   "Spawn two subagents in a single response and watch them run in parallel. Then spawn them across two turns and watch the latency difference.",
+   "Add a <code>PostToolUse</code> hook that rewrites a tool result before the model ever sees it. Normalise two different timestamp formats into one.",
+   "Add a hook that intercepts an outgoing tool call and blocks it above a threshold. Then try to achieve the same guarantee with a system prompt instruction and count the failures.",
+   "That last exercise is heuristic H1 felt rather than read. It is the most reliably tested idea in Domain 1 and you now own it."],
+   gate:"You can explain from your own experience why a hook beats a prompt for a rule that must never break."},
+  {n:5, short:"The nine days", title:"Run the nine-day plan", dur:"9 days", ts:["all"], tasks:[
+   "Switch this page to the <b>Expert</b> track and work it end to end. Everything in it will now make sense, because you have built each thing it refers to.",
+   "Book the exam only once you are inside this phase. Not before.",
+   "Sit the timed mock and use the reschedule window honestly &mdash; Pearson VUE lets you move the appointment free of charge up to 24 hours beforehand."],
+   gate:"You are ready to book."}
+ ]},
+
+experienced:{
+ id:"experienced", name:"Experienced", tag:"A1 &middot; daily Claude user, GUI or CLI", unit:"Day",
+ runway:"~2 hours per day",
+ who:"You use Claude or Claude Code most days for real work. You are fluent as a user but you have not built with the API or the Agent SDK, and you have not designed MCP tools yourself.",
+ notes:[
+  {b:"Your fluency covers about a fifth of the exam.", t:"Domain 3 is 20% and you are close to it already. Domains 1, 2 and 4 come to 65% and they assume programmatic work you have not done. Plan your time against that split, not against how comfortable Claude feels day to day."},
+  {b:"Two build days are non-negotiable.", t:"Days 4 and 5 put your hands on the API. Two hours of having debugged an agentic loop beats a week of reading about one, and Domain 1 alone is 27%. If you are already at B1 or B2 on the placement axes, skip them and finish in twelve days."},
+  {b:"Fluency is not precision.", t:"You know that <code>.claude/rules/</code> exists. Do you know that its frontmatter key is <code>paths</code>, that skills take <code>argument-hint</code>, and that <code>.claude/config.json</code> is a fiction that appears as a distractor? Days 2 and 3 exist for exactly this."}
+ ],
+ steps:[
+  {n:1, short:"Orient & diagnose", title:"Orient and diagnose", ts:["all"], tasks:[
+   "Read the Blueprint tab. Learn the five weights as numbers &mdash; 27, 18, 20, 20, 15. They tell you where the marks actually live.",
+   "Read all eight heuristics. Do not try to memorise them yet; understand why each one is true.",
+   "Read all six scenarios. Four of them will frame your exam, and they are published in full.",
+   "Read the out-of-scope list properly. It is long, specific, and it is the cheapest time you will save all fortnight.",
+   "Run the Diagnostic filter in the Drill tab &mdash; fifteen items, three per domain, untimed. Note which domains collapse. Do not study yet."]},
+  {n:2, short:"Config precision I", title:"Claude Code precision I", ts:["3.1","3.2"], tasks:[
+   "The CLAUDE.md hierarchy: user, project, directory. Know which one travels through version control and which one silently does not &mdash; that single fact is a whole exam item.",
+   "<code>@import</code> for modular includes, and <code>.claude/rules/</code> as the alternative to a monolithic file.",
+   "<code>/memory</code> is the diagnostic that tells you which memory files actually loaded. Know it as a debugging tool, not a fix.",
+   "Commands: <code>.claude/commands/</code> is project scope and shared; <code>~/.claude/commands/</code> is personal and is not.",
+   "Skills: the SKILL.md frontmatter keys are <code>context: fork</code>, <code>allowed-tools</code> and <code>argument-hint</code>. Know what each does and which problem it solves.",
+   "Skills versus CLAUDE.md: on-demand and task-specific versus always-loaded and universal. Drill items 3.1 and 3.2."]},
+  {n:3, short:"Config precision II", title:"Claude Code precision II", ts:["3.3","3.4","3.5","3.6"], tasks:[
+   "<code>.claude/rules/</code> with YAML <code>paths</code> globs, and why they beat directory-level CLAUDE.md files for conventions scattered across a tree.",
+   "Plan mode versus direct execution. Learn the decision as a test you can apply in fifteen seconds: multiple valid approaches or architectural consequence means plan mode; clear single-file scope means direct.",
+   "The Explore subagent as the tool for isolating verbose discovery output.",
+   "Iterative refinement: concrete input/output examples, test-driven iteration, the interview pattern, and when to batch fixes versus fix sequentially.",
+   "CI: <code>-p</code> / <code>--print</code>, <code>--output-format json</code>, <code>--json-schema</code>. Then learn the three invented distractors cold &mdash; they are free marks.",
+   "Drill the rest of Domain 3. You have now banked a fifth of the exam."]},
+  {n:4, short:"First API contact", title:"First API contact", ts:["1.1"], tasks:[
+   "<b>Build day.</b> Install the SDK, make one call, print the entire response object, and find <code>stop_reason</code>.",
+   "Define one tool. Call again. Watch <code>stop_reason</code> become <code>tool_use</code> and read the block: <code>id</code>, <code>name</code>, <code>input</code>.",
+   "Append the assistant response verbatim, then send a <code>tool_result</code> back under the <code>user</code> role with a matching <code>tool_use_id</code>.",
+   "Note the asymmetry: assistant turn goes back as <code>assistant</code>, tool results come back as <code>user</code>. Exam options that swap these are wrong and you should be able to say why instantly."]},
+  {n:5, short:"The loop", title:"Build the loop", ts:["1.1","2.1","2.2"], tasks:[
+   "<b>Build day.</b> Wrap yesterday&rsquo;s work in a <code>while</code> loop driven entirely by <code>stop_reason</code>. Then read the Lab tab and compare it against yours.",
+   "Deliberately implement one anti-pattern &mdash; terminate on assistant text, or cap iterations &mdash; and watch it misbehave. You will never forget it after that.",
+   "Emit two tool calls in one response and answer both before the next request.",
+   "Add a second, similar tool with a thin description. Watch selection fail. Rewrite both descriptions properly. Domain 2, learned honestly.",
+   "Return a structured error with <code>errorCategory</code> and <code>isRetryable</code>, and watch recovery change."]},
+  {n:6, short:"Domain 1a", title:"Loop control and decomposition", ts:["1.1","1.6"], tasks:[
+   "Consolidate the loop: <code>stop_reason</code> as the only condition, tool results re-entering context, and the three named anti-patterns.",
+   "Fixed prompt chaining versus dynamic adaptive decomposition. Be able to name one example of each from the six scenarios.",
+   "Prompt chaining for predictable multi-aspect review; adaptive planning for open-ended investigation. The tell is whether you can name the subtasks before looking.",
+   "Drill items 1.1 and 1.6."]},
+  {n:7, short:"Domain 1b", title:"Coordinators and subagents", ts:["1.2","1.3"], tasks:[
+   "Hub and spoke: name the three properties routing through the coordinator buys &mdash; observability, consistent error handling, controlled information flow.",
+   "Subagents inherit nothing. Context must be explicit in the prompt. This one fact answers a surprising number of items.",
+   "<code>allowedTools</code> must include <code>Task</code>. Parallel subagents mean several Task calls in one response, not across turns.",
+   "Structured claim-to-source passing, so provenance survives the handoff to synthesis.",
+   "Coordinator prompts carry goals and quality criteria, not step-by-step procedure. Drill 1.2 and 1.3."]},
+  {n:8, short:"Hooks & sessions", title:"Hooks, enforcement, sessions", ts:["1.4","1.5","1.7"], tasks:[
+   "The deterministic guarantee. A rule that must never break cannot live in a prompt. Heuristic H1, and the most reliably tested idea in the domain.",
+   "<code>PostToolUse</code> normalises results on the way in; call interception blocks actions on the way out. Know which side each sits on.",
+   "Programmatic prerequisites that gate one tool on another having succeeded.",
+   "Structured handoff summaries for a human who cannot see the transcript: verified id, root cause, amount, recommended action.",
+   "Sessions: <code>--resume</code> by name, <code>fork_session</code> for divergent branches from a valid baseline, and when a fresh session with an injected summary beats resuming stale results. Drill 1.4, 1.5, 1.7 &mdash; the 27% domain is now complete."]},
+  {n:9, short:"Domain 4a", title:"Criteria and few-shot", ts:["4.1","4.2"], tasks:[
+   "Explicit categorical criteria beat confidence language. Know why &ldquo;be conservative&rdquo; and &ldquo;only high-confidence findings&rdquo; measurably fail.",
+   "False positives are a trust problem, not just an accuracy problem. Disabling a bad category to protect the good ones is a legitimate answer.",
+   "Few-shot is the fix for inconsistency and for ambiguous-case handling. Two to four targeted examples, not fifteen generic ones.",
+   "Few-shot examples should show the reasoning for choosing one action over a plausible alternative. Drill 4.1 and 4.2."]},
+  {n:10, short:"Domain 4b", title:"Schemas, validation, batching", ts:["4.3","4.4","4.5","4.6"], tasks:[
+   "<code>tool_use</code> with a JSON schema for guaranteed structure. It eliminates syntax errors and never semantic ones &mdash; that distinction is an exam item on its own.",
+   "<code>tool_choice</code>: <code>auto</code>, <code>any</code>, and forced named selection. Know exactly what each guarantees.",
+   "Nullable and optional fields prevent fabrication. Enum plus <code>other</code> plus a detail string handles extensibility. Add <code>unclear</code> for genuine ambiguity.",
+   "Validation-retry with the specific error appended. Know the one class retry can never fix: information absent from the source.",
+   "Semantic validation by extracting <code>calculated_total</code> alongside <code>stated_total</code>.",
    "Message Batches API: 50% cheaper, up to 24 hours, no latency SLA, no multi-turn tool calling, <code>custom_id</code> to correlate. Never for blocking work.",
-   "Drill all Domain 4 items."]},
- {n:6, short:"Tools \u0026 MCP", title:"Tool design and MCP", ts:["2.1","2.2","2.3","2.4","2.5"], tasks:[
-   "Tool descriptions are the selection mechanism. When two tools get confused, the first move is almost always better descriptions &mdash; not few-shot, not a router.",
-   "Error taxonomy: transient, validation, business, permission. Plus <code>isError</code>, <code>errorCategory</code>, <code>isRetryable</code>.",
-   "Access failure versus valid empty result. Different meanings, different recovery.",
-   "Tool count degrades selection. Scope tools to role; give the high-frequency common case its own narrow tool.",
+   "Independent review instances beat self-review. Drill the rest of Domain 4."]},
+  {n:11, short:"Domain 2", title:"Tool design and MCP", ts:["2.1","2.2","2.3","2.4","2.5"], tasks:[
+   "Descriptions are the selection mechanism. When two tools get confused, the first move is almost always better descriptions.",
+   "Splitting a generic tool into purpose-specific ones with defined contracts, and renaming to remove overlap.",
+   "The error taxonomy: transient, validation, business, permission. Plus <code>isError</code>, <code>errorCategory</code>, <code>isRetryable</code>.",
+   "Access failure versus valid empty result &mdash; easy to miss and genuinely tested.",
+   "Tool count degrades selection. Scope to role; give the high-frequency simple case its own narrow tool.",
    "<code>.mcp.json</code> project scope versus <code>~/.claude.json</code> user scope, and <code>${ENV_VAR}</code> expansion for credentials.",
-   "MCP resources expose catalogues so the agent stops exploring blindly. Drill all Domain 2 items."]},
- {n:7, short:"Context, Mock 1", title:"Context, reliability, then Mock 1", ts:["5.1","5.2","5.3","5.4","5.5","5.6"], tasks:[
-   "Case-facts blocks, trimming verbose tool output, and the lost-in-the-middle effect &mdash; put key findings first and use explicit section headers.",
-   "Escalation triggers that are valid: explicit customer request, policy gap or silence, no meaningful progress. Sentiment and self-reported confidence are not.",
-   "Provenance: claim-to-source mappings survive synthesis; conflicts get annotated with attribution, never silently resolved; dates prevent temporal conflicts being read as contradictions.",
-   "<b>Sit Mock 1 &mdash; 60 items, 120 minutes, timed, no notes.</b> Use the Drill tab with all filters cleared.",
-   "Do not review it the same day. Mark it and stop."]},
- {n:8, short:"Repair, Mock 2", title:"Repair, then Mock 2", ts:["all"], tasks:[
-   "Review every Mock 1 miss. For each, name which heuristic would have caught it. If none would have, that is a knowledge gap, not a judgment gap &mdash; write it down.",
-   "Re-drill your two weakest domains using the &ldquo;Previously wrong&rdquo; filter.",
-   "<b>Sit Mock 2 &mdash; timed again.</b> Expect a real jump; the first mock is mostly a diagnostic.",
-   "Any item you got wrong twice goes on a single sheet of paper. That sheet is your final-day revision."]},
- {n:9, short:"Scenarios, recall", title:"Scenarios, recall, logistics", ts:["all"], tasks:[
-   "Walk all six scenarios. For each, say aloud which domains it draws on and what its most likely failure mode is. You will see four of these six on the day.",
-   "State the eight heuristics from memory. Then the distractor tells. Then the three invented APIs.",
-   "Reread your one sheet of twice-missed items.",
-   "Logistics: confirm the Pearson VUE appointment, check your government photo ID matches the registration name exactly, test the proctoring software, and clear your desk. Rescheduling inside 24 hours forfeits the fee.",
-   "Stop studying the evening before. Sleep is worth more than another mock."]}
-];
+   "MCP resources for content catalogues. Built-in tools: Grep for content, Glob for paths, Read then Write when Edit cannot find unique anchor text. Drill all of Domain 2."]},
+  {n:12, short:"Domain 5", title:"Context and reliability", ts:["5.1","5.2","5.3","5.4","5.5","5.6"], tasks:[
+   "Case-facts blocks kept outside summarised history, trimming verbose tool output at the boundary, and the lost-in-the-middle effect &mdash; key findings first, explicit section headers.",
+   "Valid escalation triggers: explicit customer request, policy gap or silence, inability to make meaningful progress. Sentiment and self-reported confidence are not triggers.",
+   "Structured error propagation with partial results. Never a generic status, never empty-marked-success, never terminating the whole workflow.",
+   "Scratchpad files and subagent delegation against context degradation in long sessions.",
+   "Confidence calibration, stratified sampling, and segmenting accuracy by document type and field before automating.",
+   "Provenance: claim-to-source mappings, publication dates, conflicts annotated rather than resolved. Drill all of Domain 5."]},
+  {n:13, short:"Mock", title:"Sit the timed mock", ts:["all"], tasks:[
+   "Restate the eight heuristics from memory before you start. If any is shaky, fix it now &mdash; not after.",
+   "<b>Sit the mock timed.</b> Clear all Drill filters. Two minutes per item is the real pace; practise it.",
+   "Do not review it the same day. Mark it and stop.",
+   "The mock is a gap-finder, not a score predictor &mdash; it is not calibrated to the real 100&ndash;1000 scale."]},
+  {n:14, short:"Repair & scenarios", title:"Repair, scenarios, logistics", ts:["all"], tasks:[
+   "Review every miss. For each, name which heuristic would have caught it. If none would have, it is a knowledge gap rather than a judgment gap &mdash; write it on one sheet of paper.",
+   "Re-drill using the &ldquo;Previously wrong&rdquo; filter until that sheet is short.",
+   "Walk all six scenarios. For each, say aloud which domains it draws on and its most likely failure mode.",
+   "Logistics: confirm the appointment, check your government photo ID matches the registration name exactly, test the proctoring software, clear your desk of everything. Rescheduling inside 24 hours forfeits the fee.",
+   "Stop studying the evening before. Sleep is worth more than another pass."]}
+ ]},
+
+expert:{
+ id:"expert", name:"Expert", tag:"A2 &middot; authors skills, commands, MCP config", unit:"Day",
+ runway:"~2 hours per day &middot; compressible to 5 days at B1&ndash;B2",
+ who:"You author skills, slash commands, hooks or MCP configuration that other people rely on. Claude Code is not a tool you use so much as a surface you build on.",
+ notes:[
+  {w:1, b:"Your failure mode is precision, not comprehension.", t:"You will not lose marks on architecture. You will lose them on whether the frontmatter key is <code>argument-hint</code> or <code>arg-hint</code>, and on whether <code>.claude/config.json</code> exists. Under time pressure, fluency feels like certainty and is not the same thing. Day 2 exists for this and it is the day you will most want to skip."},
+  {w:1, b:"The exam has opinions, and they may not be yours.", t:"Where your production instinct says &ldquo;it depends&rdquo;, the answer key wants the proportionate root-cause fix or the deterministic guarantee. You might genuinely build a routing classifier at scale &mdash; the exam scores that as over-engineering. Read the eight heuristics as the house style you are being marked against, not as advice you are free to weigh."},
+  {b:"Diagnose before you study.", t:"You are the one candidate who should not follow a fixed syllabus blind. Day 1 spends fifteen items finding out where you actually are, and Days 3 to 7 get reordered around what it exposes."},
+  {b:"Two minutes per item.", t:"Sixty items in 120 minutes. Experts over-deliberate on scenario questions, recognise three defensible readings, and run out of clock. Practise committing at pace."}
+ ],
+ steps:[
+  {n:1, short:"Diagnose", title:"Diagnose, then read the heuristics", ts:["all"], tasks:[
+   "Run the Diagnostic filter in the Drill tab first, cold, before reading anything else. Fifteen items, three per domain. Resist the urge to prepare &mdash; a diagnostic you have studied for tells you nothing.",
+   "Read your result per domain. Where you scored badly is your syllabus; the fixed order below is only a default.",
+   "Now read all eight heuristics, and read them as the marking scheme rather than as opinions. Note every place you disagree &mdash; those are the items you are most likely to get wrong.",
+   "Read all six scenarios and the out-of-scope list."]},
+  {n:2, short:"Config precision", title:"Domain 3 precision pass", ts:["3.1","3.2","3.3","3.4","3.5","3.6"], tasks:[
+   "This is the day to not skip. Write out cold, from memory, before checking anything: the three CLAUDE.md scopes and which is version-controlled; what <code>@import</code> does; the frontmatter key that path-scopes a rule file; all three SKILL.md frontmatter keys; the flag for non-interactive mode; the two flags that constrain CI output.",
+   "Now check yourself against the Blueprint tab. Every miss is an item you would have lost.",
+   "Learn the three inventions cold: <code>.claude/config.json</code>, <code>CLAUDE_HEADLESS</code>, <code>claude --batch</code>. None exists. All appear as distractors.",
+   "Plan mode versus direct execution as a fifteen-second test, not a philosophy.",
+   "Drill all of Domain 3. Anything below 90% here is a precision problem you can fix today."]},
+  {n:3, short:"Loop & decomposition", title:"Agentic loop and decomposition", ts:["1.1","1.6"], tasks:[
+   "Read the Lab tab. If you are B0 on the placement axes, <b>build the loop today rather than only reading it</b> &mdash; two hours of having debugged it is worth more than the rest of this day.",
+   "<code>stop_reason</code> as the sole loop condition. The asymmetric appends: assistant response as <code>assistant</code>, tool results as <code>user</code>.",
+   "The three named anti-patterns, and why an iteration cap is a guard rather than a condition.",
+   "Prompt chaining versus dynamic decomposition, and the tell that distinguishes them. Drill 1.1 and 1.6."]},
+  {n:4, short:"Orchestration", title:"Coordinators, subagents, context", ts:["1.2","1.3"], tasks:[
+   "Hub and spoke, and the three properties it buys. Why direct subagent edges are an architectural regression even when they are faster.",
+   "Subagents inherit nothing. You know this from Task-tool use; make sure you know it as the guide states it.",
+   "<code>allowedTools</code> must include <code>Task</code>. Parallel means several Task calls in one response.",
+   "Overly narrow coordinator decomposition as a root cause &mdash; heuristic H6. When every worker succeeds and the output is still wrong, look upstream.",
+   "Structured claim-to-source passing so provenance survives synthesis. Drill 1.2 and 1.3."]},
+  {n:5, short:"Hooks & sessions", title:"Hooks, enforcement, sessions", ts:["1.4","1.5","1.7"], tasks:[
+   "Hooks for deterministic guarantees. <code>PostToolUse</code> inbound, call interception outbound.",
+   "Programmatic prerequisites gating one tool on another. Structured handoff summaries for humans without the transcript.",
+   "<code>--resume</code>, <code>fork_session</code>, and the judgment call between resuming and starting fresh with an injected summary. Know where the line falls when prior results are partly stale.",
+   "Drill 1.4, 1.5, 1.7. The 27% domain is now complete &mdash; check your rate on it before moving on."]},
+  {n:6, short:"Prompt & output", title:"Prompt engineering and structured output", ts:["4.1","4.2","4.3","4.4","4.5","4.6"], tasks:[
+   "Explicit categorical criteria over confidence language. False positives as a trust problem.",
+   "Few-shot for inconsistency and ambiguity; two to four targeted examples.",
+   "<code>tool_use</code> with schemas; the three <code>tool_choice</code> modes and what each guarantees; syntax versus semantic errors.",
+   "Nullable fields against fabrication; enum plus <code>other</code> plus detail; <code>unclear</code> for ambiguity.",
+   "Retry with specific errors, and the one class it cannot fix. <code>calculated_total</code> against <code>stated_total</code> for semantic checks.",
+   "Message Batches API: the five facts &mdash; 50% saving, 24-hour window, no SLA, no multi-turn tool calling, <code>custom_id</code>. This is the most commonly under-learned corner of Domain 4.",
+   "Independent review instances over self-review. Drill all of Domain 4."]},
+  {n:7, short:"Tools, MCP, context", title:"Tool design, MCP, context management", ts:["2.1","2.2","2.3","2.4","2.5","5.1","5.2","5.3","5.4","5.5","5.6"], tasks:[
+   "Descriptions as the selection mechanism; splitting and renaming to kill overlap.",
+   "The full error taxonomy plus <code>isRetryable</code>, and access failure versus valid empty result.",
+   "Tool count and selection degradation; scoped cross-role tools for the high-frequency case.",
+   "MCP scoping and <code>${ENV_VAR}</code> expansion. Resources as content catalogues. Why a well-described MCP tool loses to built-in Grep when its description is thin.",
+   "Domain 5 in one pass, since you have lived most of it: case-facts blocks, output trimming, lost-in-the-middle, escalation triggers, structured propagation, scratchpads, stratified sampling, provenance and conflict annotation. Learn the formal names for things you already do.",
+   "Drill all of Domain 2 and Domain 5."]},
+  {n:8, short:"Mock", title:"Sit the timed mock", ts:["all"], tasks:[
+   "Restate the eight heuristics from memory first. Then the distractor tells. Then the three inventions.",
+   "<b>Sit the mock timed</b> with all filters cleared. Hold to two minutes per item and commit rather than deliberate &mdash; that discipline is what you are practising as much as the content.",
+   "Review every miss the same evening if you have the appetite; you have less runway than the other tracks. For each, name the heuristic that would have caught it.",
+   "Treat it as a gap-finder. It is not calibrated to the real scaled score and will not predict it."]},
+  {n:9, short:"Scenarios & recall", title:"Scenarios, recall, logistics", ts:["all"], tasks:[
+   "Walk all six scenarios. For each, name its domains and its most likely failure mode. Four will frame your exam.",
+   "Re-drill with the &ldquo;Previously wrong&rdquo; filter until the list is short.",
+   "Reread every place you noted disagreement with the heuristics on Day 1. Those are your residual risk.",
+   "Logistics: confirm the appointment, check your photo ID matches the registration name exactly, test the proctoring software, clear the desk. Inside 24 hours a change forfeits the fee.",
+   "Stop the evening before."]}
+ ]}
+};
+const TRACK_ORDER = ["beginner","experienced","expert"];
 
 const HEUR = [
  {id:"H1", t:"Determinism beats prompting", b:"When a rule must never break &mdash; identity checked before a refund, a threshold never exceeded &mdash; use a hook or a programmatic prerequisite. Prompt instructions have a non-zero failure rate, and that is disqualifying when money or identity is involved.", ev:"Sample Q1"},
@@ -800,9 +1033,13 @@ const store = {
   get(k,d){ try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } },
   set(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
 };
-let doneDays = store.get("ccarf_days",[]);
-let answers  = store.get("ccarf_ans",{});
-let activeDay = 1;
+let answers = store.get("ccarf_ans",{});
+let track = store.get("ccarf_track","experienced");
+if(!TRACKS[track]) track = "experienced";
+const T = () => TRACKS[track];
+const doneKey = () => "ccarf_done_" + track;
+let doneSteps = store.get(doneKey(),[]);
+let activeStep = 1;
 
 /* tabs */
 document.querySelectorAll('nav.tabs button').forEach(b=>{
@@ -816,35 +1053,57 @@ document.querySelectorAll('nav.tabs button').forEach(b=>{
 });
 
 /* plan */
-function renderRail(){
-  $("#rail").innerHTML = DAYS.map(d=>{
-    const on = doneDays.includes(d.n);
-    return `<button data-d="${d.n}" aria-current="${d.n===activeDay}">
-      <span class="tick ${on?"on":""}">&check;</span>
-      <span class="dnum">D${d.n}</span>
-      <span>${d.short}</span>
-    </button>`;
+function renderTrackSel(){
+  document.querySelector("#tsel").innerHTML = TRACK_ORDER.map(k=>{
+    const t = TRACKS[k];
+    return `<button data-t="${k}" aria-pressed="${k===track}">${t.name}<span>${t.tag}</span></button>`;
   }).join("");
-  $("#rail").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
-    activeDay = +b.dataset.d; renderRail(); renderDay();
+  document.querySelectorAll("#tsel button").forEach(b=>b.addEventListener("click",()=>{
+    track = b.dataset.t; store.set("ccarf_track",track);
+    doneSteps = store.get(doneKey(),[]); activeStep = 1;
+    renderTrackSel(); renderTrackHead(); renderRail(); renderDay();
+  }));
+}
+function renderTrackHead(){
+  const t = T();
+  document.querySelector("#thead").innerHTML = `<div class="thead">
+    <h2>${t.name} track</h2><p>${t.who}</p>
+    <span class="runway">${t.runway} &middot; ${t.steps.length} ${t.unit.toLowerCase()}s</span></div>`;
+  document.querySelector("#tnotes").innerHTML = t.notes.map(n=>
+    `<div class="tnote ${n.w?"warn":""}"><b>${n.b}</b> ${n.t}</div>`).join("");
+}
+function renderRail(){
+  const t = T();
+  document.querySelector("#rail").innerHTML = t.steps.map(d=>{
+    const on = doneSteps.includes(d.n);
+    return `<button data-d="${d.n}" aria-current="${d.n===activeStep}">
+      <span class="tick ${on?"on":""}">&check;</span>
+      <span class="dnum">${t.unit[0]}${d.n}</span>
+      <span>${d.short}</span></button>`;
+  }).join("");
+  document.querySelectorAll("#rail button").forEach(b=>b.addEventListener("click",()=>{
+    activeStep = +b.dataset.d; renderRail(); renderDay();
   }));
 }
 function renderDay(){
-  const d = DAYS.find(x=>x.n===activeDay);
-  const on = doneDays.includes(d.n);
-  $("#daypanel").innerHTML = `
+  const t = T();
+  const d = t.steps.find(x=>x.n===activeStep) || t.steps[0];
+  const on = doneSteps.includes(d.n);
+  document.querySelector("#daypanel").innerHTML = `
     <div class="day-head">
-      <h2>Day ${d.n} &middot; ${d.title}</h2>
+      <h2>${t.unit} ${d.n} &middot; ${d.title}</h2>
+      ${d.dur?`<span class="dur">${d.dur}</span>`:""}
     </div>
-    <div class="tscodes">${d.ts.map(t=>`<span class="ts">${t==="all"?"all task statements":t}</span>`).join("")}</div>
-    <ul class="tasks">${d.tasks.map((t,i)=>`<li><span>${i+1}</span><span>${t}</span></li>`).join("")}</ul>
+    <div class="tscodes">${d.ts.map(x=>`<span class="ts">${x==="all"?"all task statements":x}</span>`).join("")}</div>
+    <ul class="tasks">${d.tasks.map((x,i)=>`<li><span>${i+1}</span><span>${x}</span></li>`).join("")}</ul>
+    ${d.gate?`<div class="gate"><b>Gate</b><br>${d.gate}</div>`:""}
     <div class="done-row">
-      <button class="btn ${on?"ghost":""}" id="markdone">${on?"Mark day ".concat(d.n," not done"):"Mark day ".concat(d.n," done")}</button>
-      <span style="font-family:var(--mono);font-size:12px;color:var(--txt3)">${doneDays.length} of 9 days complete</span>
+      <button class="btn ${on?"ghost":""}" id="markdone">${on?`Mark ${t.unit.toLowerCase()} ${d.n} not done`:`Mark ${t.unit.toLowerCase()} ${d.n} done`}</button>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--txt3)">${doneSteps.length} of ${t.steps.length} complete</span>
     </div>`;
-  $("#markdone").addEventListener("click",()=>{
-    doneDays = on ? doneDays.filter(x=>x!==d.n) : [...doneDays,d.n];
-    store.set("ccarf_days",doneDays); renderRail(); renderDay();
+  document.querySelector("#markdone").addEventListener("click",()=>{
+    doneSteps = on ? doneSteps.filter(x=>x!==d.n) : [...doneSteps,d.n];
+    store.set(doneKey(),doneSteps); renderRail(); renderDay();
   });
 }
 
@@ -872,6 +1131,7 @@ $("#labbody").innerHTML = LAB;
 DOMAINS.forEach(d=>$("#fdom").insertAdjacentHTML("beforeend",`<option value="${d.n}">Domain ${d.n} &mdash; ${d.w}%</option>`));
 SCEN.forEach(s=>$("#fscen").insertAdjacentHTML("beforeend",`<option value="${s.n}">${s.n}. ${s.t}</option>`));
 const L = ["A","B","C","D","E"];
+const DIAG = (()=>{ const c={}, out=[]; Q.forEach(q=>{ c[q.d]=(c[q.d]||0)+1; if(c[q.d]<=3) out.push(q.id); }); return out; })();
 
 function visible(){
   const dm=$("#fdom").value, sc=$("#fscen").value, md=$("#fmode").value;
@@ -881,6 +1141,7 @@ function visible(){
     const a=answers[q.id];
     if(md==="unseen" && a) return false;
     if(md==="wrong" && (!a || a.ok)) return false;
+    if(md==="diag" && !DIAG.includes(q.id)) return false;
     return true;
   });
 }
@@ -946,5 +1207,5 @@ $("#reset").addEventListener("click",()=>{
   answers={}; store.set("ccarf_ans",answers); renderDrill();
 });
 
-renderRail(); renderDay(); renderDrill();
+renderTrackSel(); renderTrackHead(); renderRail(); renderDay(); renderDrill();
 </script>
