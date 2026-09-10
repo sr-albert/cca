@@ -207,7 +207,7 @@ footer p{margin:0 0 7px; max-width:74ch}
       <p>Claude Certified Architect &ndash; Foundations</p>
     </div>
     <div class="count">
-      <div><span class="n" id="dleft">&mdash;</span><span class="l">Days left</span></div>
+      <div><span class="n">9</span><span class="l">Study days</span></div>
       <div><span class="n">720</span><span class="l">Cut / 1000</span></div>
       <div><span class="n">60</span><span class="l">Items / 120 min</span></div>
     </div>
@@ -226,7 +226,7 @@ footer p{margin:0 0 7px; max-width:74ch}
 
 <!-- ============ PLAN ============ -->
 <section id="p-plan">
-  <p class="lede">Nine days, allocated by domain weight multiplied by how far the material sits from what you already do. Domain&nbsp;1 takes three of them. Everything is covered by Day&nbsp;7 so the last two days are mocks and repair.</p>
+  <p class="lede">Nine study days, counted from wherever you start. Time is allocated by domain weight multiplied by how far the material sits from what you already do. Domain&nbsp;1 takes three of them. Everything is covered by Day&nbsp;7 so the last two days are mocks and repair.</p>
   <div class="split">
     <div class="rail" id="rail"></div>
     <div id="daypanel"></div>
@@ -323,63 +323,61 @@ footer p{margin:0 0 7px; max-width:74ch}
 
 <script>
 /* ============================ DATA ============================ */
-const EXAM = new Date(2026, 8, 19); // 19 Sep 2026
-
 const DAYS = [
- {n:1, date:"Wed 10 Sep", title:"Heuristics, then Domain 3 cold", ts:["3.1","3.2","3.3","3.4","3.5","3.6"], tasks:[
+ {n:1, short:"Heuristics", title:"Heuristics, then Domain 3 cold", ts:["3.1","3.2","3.3","3.4","3.5","3.6"], tasks:[
    "Read the eight heuristics until you can state each one without looking. This is the highest-yield hour of the nine days.",
    "Cold-recall pass on Claude Code: write out from memory the three CLAUDE.md scopes, what <code>@import</code> does, the frontmatter keys a SKILL.md accepts, and every CLI flag you know. Then check yourself against the Blueprint tab.",
    "Learn the three invented-API distractors by heart. They are free marks.",
    "Drill every Domain 3 item. Aim to finish the day above 80% on your strongest domain."]},
- {n:2, date:"Thu 11 Sep", title:"Agentic loop and decomposition", ts:["1.1","1.6"], tasks:[
+ {n:2, short:"The loop", title:"Agentic loop and decomposition", ts:["1.1","1.6"], tasks:[
    "Read the Lab tab. Trace the loop line by line until you can say why <code>stop_reason</code> drives it and text content never does.",
    "Write the loop out on paper from memory. Include how tool results re-enter the conversation and with which role.",
    "Learn the three loop anti-patterns: parsing natural language for completion, iteration caps as the primary stop, checking assistant text.",
    "Fixed pipeline versus adaptive decomposition &mdash; be able to give one example of each from the six scenarios.",
    "Drill Domain 1 items tagged 1.1 and 1.6."]},
- {n:3, date:"Fri 12 Sep", title:"Orchestration and context passing", ts:["1.2","1.3"], tasks:[
+ {n:3, short:"Orchestration", title:"Orchestration and context passing", ts:["1.2","1.3"], tasks:[
    "Hub-and-spoke: know the three things routing through the coordinator buys you, and be able to name them fast.",
    "Commit this to memory: subagents inherit nothing. Context must be in the prompt. This single fact answers a surprising number of items.",
    "Know that <code>allowedTools</code> must include <code>Task</code>, and that parallel subagents mean several Task calls in one response, not several turns.",
    "Understand why a coordinator prompt should carry goals and quality criteria rather than step-by-step procedure.",
    "Drill items tagged 1.2 and 1.3."]},
- {n:4, date:"Sat 13 Sep", title:"Hooks, enforcement, sessions", ts:["1.4","1.5","1.7"], tasks:[
+ {n:4, short:"Hooks, sessions", title:"Hooks, enforcement, sessions", ts:["1.4","1.5","1.7"], tasks:[
    "Hooks versus prompts: the deterministic-guarantee distinction. If a business rule must never break, a prompt cannot deliver it. Heuristic H1.",
    "Know <code>PostToolUse</code> for normalising tool results on the way in, and tool-call interception for blocking actions on the way out.",
    "Structured handoff: what an escalation summary must carry for a human who cannot see the transcript.",
    "Sessions: <code>--resume</code> by name, <code>fork_session</code> for divergent branches, and when a fresh session with an injected summary beats resuming stale results.",
    "Drill items tagged 1.4, 1.5 and 1.7. You have now covered all of the 27% domain."]},
- {n:5, date:"Sun 14 Sep", title:"Prompt engineering and structured output", ts:["4.1","4.2","4.3","4.4","4.5","4.6"], tasks:[
+ {n:5, short:"Prompt \u0026 output", title:"Prompt engineering and structured output", ts:["4.1","4.2","4.3","4.4","4.5","4.6"], tasks:[
    "Explicit categorical criteria beat confidence language. &ldquo;Be conservative&rdquo; and &ldquo;only high-confidence findings&rdquo; do not work &mdash; know why.",
    "Few-shot is the answer when the failure is inconsistency or ambiguity handling. Two to four targeted examples, not five to eight generic ones.",
    "<code>tool_use</code> with a JSON schema for guaranteed structure. Know the three <code>tool_choice</code> modes cold, and that schemas kill syntax errors but never semantic ones.",
    "Nullable and optional fields prevent fabrication. Enum plus <code>other</code> plus a detail string handles extensibility.",
    "Message Batches API: 50% cheaper, up to 24 hours, no latency SLA, no multi-turn tool calling, <code>custom_id</code> to correlate. Never for blocking work.",
    "Drill all Domain 4 items."]},
- {n:6, date:"Mon 15 Sep", title:"Tool design and MCP", ts:["2.1","2.2","2.3","2.4","2.5"], tasks:[
+ {n:6, short:"Tools \u0026 MCP", title:"Tool design and MCP", ts:["2.1","2.2","2.3","2.4","2.5"], tasks:[
    "Tool descriptions are the selection mechanism. When two tools get confused, the first move is almost always better descriptions &mdash; not few-shot, not a router.",
    "Error taxonomy: transient, validation, business, permission. Plus <code>isError</code>, <code>errorCategory</code>, <code>isRetryable</code>.",
    "Access failure versus valid empty result. Different meanings, different recovery.",
    "Tool count degrades selection. Scope tools to role; give the high-frequency common case its own narrow tool.",
    "<code>.mcp.json</code> project scope versus <code>~/.claude.json</code> user scope, and <code>${ENV_VAR}</code> expansion for credentials.",
    "MCP resources expose catalogues so the agent stops exploring blindly. Drill all Domain 2 items."]},
- {n:7, date:"Tue 16 Sep", title:"Context, reliability, then Mock 1", ts:["5.1","5.2","5.3","5.4","5.5","5.6"], tasks:[
+ {n:7, short:"Context, Mock 1", title:"Context, reliability, then Mock 1", ts:["5.1","5.2","5.3","5.4","5.5","5.6"], tasks:[
    "Case-facts blocks, trimming verbose tool output, and the lost-in-the-middle effect &mdash; put key findings first and use explicit section headers.",
    "Escalation triggers that are valid: explicit customer request, policy gap or silence, no meaningful progress. Sentiment and self-reported confidence are not.",
    "Provenance: claim-to-source mappings survive synthesis; conflicts get annotated with attribution, never silently resolved; dates prevent temporal conflicts being read as contradictions.",
    "<b>Sit Mock 1 &mdash; 60 items, 120 minutes, timed, no notes.</b> Use the Drill tab with all filters cleared.",
-   "Do not review it tonight. Mark it and stop."]},
- {n:8, date:"Wed 17 Sep", title:"Repair, then Mock 2", ts:["all"], tasks:[
+   "Do not review it the same day. Mark it and stop."]},
+ {n:8, short:"Repair, Mock 2", title:"Repair, then Mock 2", ts:["all"], tasks:[
    "Review every Mock 1 miss. For each, name which heuristic would have caught it. If none would have, that is a knowledge gap, not a judgment gap &mdash; write it down.",
    "Re-drill your two weakest domains using the &ldquo;Previously wrong&rdquo; filter.",
    "<b>Sit Mock 2 &mdash; timed again.</b> Expect a real jump; the first mock is mostly a diagnostic.",
-   "Any item you got wrong twice goes on a single sheet of paper. That sheet is tomorrow's revision."]},
- {n:9, date:"Thu 18 Sep", title:"Scenarios, recall, logistics", ts:["all"], tasks:[
-   "Walk all six scenarios. For each, say aloud which domains it draws on and what its most likely failure mode is. You will see four of these six tomorrow.",
+   "Any item you got wrong twice goes on a single sheet of paper. That sheet is your final-day revision."]},
+ {n:9, short:"Scenarios, recall", title:"Scenarios, recall, logistics", ts:["all"], tasks:[
+   "Walk all six scenarios. For each, say aloud which domains it draws on and what its most likely failure mode is. You will see four of these six on the day.",
    "State the eight heuristics from memory. Then the distractor tells. Then the three invented APIs.",
    "Reread your one sheet of twice-missed items.",
    "Logistics: confirm the Pearson VUE appointment, check your government photo ID matches the registration name exactly, test the proctoring software, and clear your desk. Rescheduling inside 24 hours forfeits the fee.",
-   "Stop studying by early evening. Sleep is worth more than another mock."]}
+   "Stop studying the evening before. Sleep is worth more than another mock."]}
 ];
 
 const HEUR = [
@@ -806,13 +804,6 @@ let doneDays = store.get("ccarf_days",[]);
 let answers  = store.get("ccarf_ans",{});
 let activeDay = 1;
 
-/* countdown */
-(function(){
-  const ms = EXAM - new Date();
-  const d = Math.max(0, Math.ceil(ms/86400000));
-  $("#dleft").textContent = d;
-})();
-
 /* tabs */
 document.querySelectorAll('nav.tabs button').forEach(b=>{
   b.addEventListener("click",()=>{
@@ -831,7 +822,7 @@ function renderRail(){
     return `<button data-d="${d.n}" aria-current="${d.n===activeDay}">
       <span class="tick ${on?"on":""}">&check;</span>
       <span class="dnum">D${d.n}</span>
-      <span>${d.date.split(" ")[0]} ${d.date.split(" ")[1]}</span>
+      <span>${d.short}</span>
     </button>`;
   }).join("");
   $("#rail").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{
@@ -844,7 +835,6 @@ function renderDay(){
   $("#daypanel").innerHTML = `
     <div class="day-head">
       <h2>Day ${d.n} &middot; ${d.title}</h2>
-      <span class="date">${d.date} 2026</span>
     </div>
     <div class="tscodes">${d.ts.map(t=>`<span class="ts">${t==="all"?"all task statements":t}</span>`).join("")}</div>
     <ul class="tasks">${d.tasks.map((t,i)=>`<li><span>${i+1}</span><span>${t}</span></li>`).join("")}</ul>
