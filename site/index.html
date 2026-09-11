@@ -47,7 +47,7 @@ a{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
 
 /* ---------- masthead ---------- */
-.mast{border-bottom:1px solid var(--line); background:var(--surface)}
+.mast{background:var(--surface)}
 .mast-in{max-width:1180px; margin:0 auto; padding:18px 20px 0;
   display:flex; flex-wrap:wrap; gap:16px 28px; align-items:flex-end; justify-content:space-between}
 .brand h1{font-size:23px; letter-spacing:-.015em}
@@ -56,7 +56,12 @@ a{color:var(--accent)}
 .count .n{font-size:38px; font-weight:600; line-height:.9; color:var(--accent); font-variant-numeric:tabular-nums}
 .count .l{font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--txt3); display:block; margin-top:6px}
 
-nav.tabs{max-width:1180px; margin:0 auto; padding:14px 20px 0; display:flex; gap:2px; overflow-x:auto}
+nav.tabs{position:sticky; top:0; z-index:30; background:var(--surface); border-bottom:1px solid var(--line);
+  padding:0 20px; display:flex; gap:2px; overflow-x:auto; align-items:center}
+nav.tabs .navin{max-width:1180px; margin:0 auto; width:100%; display:flex; gap:2px; align-items:center}
+nav.tabs .sep{width:1px; height:17px; background:var(--line); margin:0 10px; flex:0 0 auto}
+nav.tabs .reflabel{font-family:var(--mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase;
+  color:var(--txt3); margin-right:4px; flex:0 0 auto}
 nav.tabs button{
   font-family:var(--display); font-size:13px; font-weight:600; letter-spacing:.02em;
   background:none; border:0; border-bottom:2px solid transparent; color:var(--txt2);
@@ -66,16 +71,48 @@ nav.tabs button[aria-selected="true"]{color:var(--accent); border-bottom-color:v
 nav.tabs button:hover{color:var(--txt)}
 
 /* ---------- shell ---------- */
-.wrap{max-width:1180px; margin:0 auto; padding-block:28px 72px; padding-left:20px; padding-right:20px}
-.split{display:grid; grid-template-columns:224px 1fr; gap:34px; align-items:start}
-@media (max-width:860px){.split{grid-template-columns:1fr; gap:22px}}
-
+.app{max-width:1180px; margin:0 auto; padding-left:20px; padding-right:20px; padding-block:24px 70px;
+  display:grid; grid-template-columns:334px 1fr; gap:30px; align-items:start}
+.workpane{min-width:0}
+.planpane{position:sticky; top:54px; max-height:calc(100vh - 74px); overflow:auto;
+  border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:15px 16px}
+.panefold{display:flex; gap:10px; align-items:center; width:100%; text-align:left; cursor:pointer;
+  background:none; border:0; padding:0 0 11px; margin:0;
+  font-family:var(--display); font-size:13.5px; font-weight:600; color:var(--txt)}
+.panefold::before{content:"\2013"; font-family:var(--mono); color:var(--accent); width:13px; flex:0 0 auto}
+.panefold[aria-expanded="false"]::before{content:"+"}
+.panefold .psum{font-family:var(--mono); font-size:11px; font-weight:400; color:var(--txt3);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.panefold[aria-expanded="false"]{padding-bottom:0}
+.panefold[aria-expanded="false"]+.panebody{display:none}
+.app.collapsed{grid-template-columns:1fr}
+.app.collapsed .planpane{position:sticky; top:54px; z-index:5; padding:11px 14px}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr; gap:18px}
+  .planpane{position:static; max-height:none; overflow:visible}
+}
 .lede{font-size:17px; color:var(--txt2); max-width:64ch; margin:0 0 22px}
 .eyebrow{font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--txt3); margin:0 0 8px}
 section[hidden]{display:none!important}
 
+/* ---------- plan pane ---------- */
+.ptrack{width:100%; font-family:var(--display); font-size:12.5px; font-weight:600; padding:7px 9px;
+  border:1px solid var(--line); border-radius:var(--r); background:var(--bg); color:var(--txt); margin-bottom:11px}
+.daychips{display:flex; flex-wrap:wrap; gap:4px; margin-bottom:14px}
+.daychips button{font-family:var(--mono); font-size:11px; min-width:29px; height:25px; padding:0 5px;
+  border:1px solid var(--line); border-radius:2px; background:var(--bg); color:var(--txt2); cursor:pointer}
+.daychips button.done{border-color:var(--good); color:var(--good)}
+.daychips button[aria-current="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+.ptitle{font-family:var(--display); font-weight:600; font-size:15.5px; line-height:1.25; margin:0 0 4px}
+.pmeta{font-family:var(--mono); font-size:10.5px; color:var(--txt3); display:block; margin-bottom:12px}
+.planpane .tasks li{padding:10px 11px; font-size:13.5px; line-height:1.5}
+.planpane .chipbtn{font-size:11.5px; padding:4px 8px}
+.planpane .gate{font-size:13px; margin-top:11px}
+.tkbody.active{box-shadow:-11px 0 0 -8px var(--accent)}
+.allday-h{font-size:15px; margin:30px 0 11px}
+
 /* ---------- day rail ---------- */
-.rail{position:sticky; top:14px; display:flex; flex-direction:column; gap:1px;
+.rail{position:sticky; top:62px; display:flex; flex-direction:column; gap:1px;
   border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--line)}
 @media (max-width:860px){.rail{position:static; flex-direction:row; overflow-x:auto}}
 .rail button{
@@ -197,6 +234,30 @@ pre u{text-decoration:none; background:var(--accent-soft); border-radius:2px; pa
 .note b{color:var(--txt); font-family:var(--display); font-size:13.5px}
 
 
+/* ---------- actionable tasks ---------- */
+.tasks li{align-items:flex-start}
+.tkbox{flex:0 0 auto; width:15px; height:15px; margin-top:3px; border:1.5px solid var(--txt3); border-radius:2px;
+  background:none; cursor:pointer; display:grid; place-items:center; font-size:10px; color:transparent; padding:0}
+.tkbox.on{background:var(--good); border-color:var(--good); color:#fff}
+.tkbody{flex:1}
+.tkbody.done{color:var(--txt3); text-decoration:line-through; text-decoration-color:var(--line)}
+.chips-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:9px}
+.chipbtn{font-family:var(--display); font-size:12px; font-weight:600; color:var(--accent);
+  background:var(--accent-soft); border:1px solid transparent; border-radius:var(--r);
+  padding:5px 10px; cursor:pointer; display:inline-flex; align-items:center; gap:6px}
+.chipbtn:hover{border-color:var(--accent)}
+.chipbtn::after{content:"\2192"; font-family:var(--mono); opacity:.7}
+.daymeta{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:18px;
+  font-family:var(--mono); font-size:12px; color:var(--txt3)}
+.daymeta button{font-family:var(--mono); font-size:12px; background:none; border:0; cursor:pointer;
+  color:var(--accent); padding:0; text-decoration:underline; text-underline-offset:3px}
+.tick.part{background:none; border-color:var(--good); color:var(--good)}
+
+/* ---------- active filter pill ---------- */
+.fpill{display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11.5px;
+  background:var(--accent-soft); color:var(--accent); border-radius:var(--r); padding:6px 9px}
+.fpill button{background:none; border:0; color:var(--accent); cursor:pointer; font-size:13px; line-height:1; padding:0}
+
 /* ---------- placement & tracks ---------- */
 .place{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:18px 20px; margin-bottom:24px}
 .place h3{font-size:17px; margin-bottom:5px}
@@ -252,20 +313,29 @@ footer p{margin:0 0 7px; max-width:74ch}
       <div><span class="n">60</span><span class="l">Items / 120 min</span></div>
     </div>
   </div>
-  <nav class="tabs" role="tablist">
-    <button role="tab" data-p="plan" aria-selected="true">Plan</button>
-    <button role="tab" data-p="heur" aria-selected="false">Heuristics</button>
-    <button role="tab" data-p="blue" aria-selected="false">Blueprint</button>
-    <button role="tab" data-p="scen" aria-selected="false">Scenarios</button>
-    <button role="tab" data-p="drill" aria-selected="false">Drill</button>
-    <button role="tab" data-p="lab" aria-selected="false">Lab</button>
-  </nav>
 </header>
 
-<main class="wrap">
+<nav class="tabs" role="tablist">
+ <div class="navin">
+  <button role="tab" data-p="over" aria-selected="true">Overview</button>
+  <span class="sep"></span><span class="reflabel">Reference</span>
+  <button role="tab" data-p="heur" aria-selected="false">Heuristics</button>
+  <button role="tab" data-p="blue" aria-selected="false">Blueprint</button>
+  <button role="tab" data-p="scen" aria-selected="false">Scenarios</button>
+  <button role="tab" data-p="lab" aria-selected="false">Lab</button>
+  <span class="sep"></span><span class="reflabel">Practice</span>
+  <button role="tab" data-p="drill" aria-selected="false">Drill</button>
+ </div>
+</nav>
 
-<!-- ============ PLAN ============ -->
-<section id="p-plan">
+<div class="app">
+  <aside class="planpane" id="planpane">
+    <button class="panefold" id="panefold" aria-expanded="true">Today&rsquo;s plan</button>
+    <div class="panebody" id="panebody"></div>
+  </aside>
+
+  <div class="workpane">
+    <section id="p-over">
   <div class="place">
     <h3>Place yourself first</h3>
     <p>This exam measures two independent things, and most preparation advice collapses them into one. Score yourself on both axes, then take the track the table gives you &mdash; not the one your job title suggests.</p>
@@ -299,14 +369,12 @@ footer p{margin:0 0 7px; max-width:74ch}
     </table>
   </div>
 
-  <div class="tsel" id="tsel"></div>
-  <div id="thead"></div>
-  <div id="tnotes" class="tnotes"></div>
-  <div class="split">
-    <div class="rail" id="rail"></div>
-    <div id="daypanel"></div>
-  </div>
-</section>
+      <div class="tsel" id="tsel"></div>
+      <div id="thead"></div>
+      <div id="tnotes" class="tnotes"></div>
+      <h3 class="allday-h">All <span id="unitplural">days</span></h3>
+      <div class="rail" id="rail"></div>
+    </section>
 
 <!-- ============ HEURISTICS ============ -->
 <section id="p-heur" hidden>
@@ -377,7 +445,7 @@ footer p{margin:0 0 7px; max-width:74ch}
     <select id="fdom"><option value="">All domains</option></select>
     <select id="fscen"><option value="">All scenarios</option></select>
     <select id="fmode"><option value="">All items</option><option value="unseen">Unanswered only</option><option value="wrong">Previously wrong</option><option value="diag">Diagnostic (15)</option></select>
-    <button class="btn quiet" id="reset">Reset answers</button>
+    <span id="tspill"></span><button class="btn quiet" id="reset">Reset answers</button>
     <span class="score" id="score"></span>
   </div>
   <div id="qlist"></div>
@@ -394,7 +462,9 @@ footer p{margin:0 0 7px; max-width:74ch}
   <p><b>These questions are original.</b> They were written against the guide's published task statements to practise the same judgments. They are not exam content, and none is reproduced here &mdash; the exam is covered by a confidentiality agreement. Treat any site claiming to offer real items with suspicion.</p>
   <p>Study progress is stored in your own browser only. Nothing is uploaded.</p>
 </footer>
-</main>
+
+  </div>
+</div>
 
 <script>
 /* ============================ DATA ============================ */
@@ -1039,18 +1109,59 @@ if(!TRACKS[track]) track = "experienced";
 const T = () => TRACKS[track];
 const doneKey = () => "ccarf_done_" + track;
 let doneSteps = store.get(doneKey(),[]);
+const taskKey = () => "ccarf_tasks_" + track;
+let taskDone = store.get(taskKey(),{});
 let activeStep = 1;
+let tsFilter = null;          // array of task-statement codes, set by plan chips
+let activeTask = null;        // {step, idx} the task the reader is currently working
 
 /* tabs */
+const PANELS = ["over","heur","blue","scen","drill","lab"];
+function goTo(panel){
+  document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute("aria-selected", x.dataset.p===panel));
+  PANELS.forEach(p=>{ $("#p-"+p).hidden = (p !== panel); });
+  window.scrollTo({top:0,behavior:"instant"});
+}
 document.querySelectorAll('nav.tabs button').forEach(b=>{
-  b.addEventListener("click",()=>{
-    document.querySelectorAll('nav.tabs button').forEach(x=>x.setAttribute("aria-selected", x===b));
-    ["plan","heur","blue","scen","drill","lab"].forEach(p=>{
-      $("#p-"+p).hidden = (p !== b.dataset.p);
-    });
-    window.scrollTo({top:0,behavior:"instant"});
-  });
+  b.addEventListener("click",()=>goTo(b.dataset.p));
 });
+
+/* ---- what a task asks you to go and do ---- */
+function actionsFor(txt, step){
+  const acts = [];
+  const codes = [...new Set(txt.match(/\b[1-5]\.\d\b/g) || [])];
+  const doms  = [...new Set((txt.match(/Domain (\d)/g) || []).map(x=>x.slice(-1)))];
+  if(/Blueprint tab/i.test(txt))            acts.push({go:"blue",  label:"Open Blueprint"});
+  if(/Lab tab/i.test(txt))                  acts.push({go:"lab",   label:"Open the Lab"});
+  if(/(Read|Restate|Reread|understand)[^.]*heuristic/i.test(txt)
+     || /which heuristic|the heuristic that/i.test(txt))   acts.push({go:"heur", label:"Open Heuristics"});
+  if(/(Read|Walk)[^.]*scenarios/i.test(txt)
+     || /from the six scenarios/i.test(txt))               acts.push({go:"scen", label:"Open Scenarios"});
+  const sw = txt.match(/Switch this page to the <b>(\w+)<\/b> track/i);
+  if(sw) acts.push({go:"track", track:sw[1].toLowerCase(), label:"Switch to the "+sw[1]+" track"});
+  if(/out-of-scope/i.test(txt))             acts.push({go:"blue",  label:"Open Blueprint"});
+
+  if(/Diagnostic filter/i.test(txt))        acts.push({go:"drill", label:"Run the 15-item diagnostic", f:{mode:"diag"}});
+  else if(/Previously wrong/i.test(txt))    acts.push({go:"drill", label:"Drill previous misses",      f:{mode:"wrong"}});
+  else if(/Sit the mock|Sit the timed mock/i.test(txt)) acts.push({go:"drill", label:"Start the timed mock", f:{clear:true}});
+  else if(/\bDrill\b/.test(txt)){
+    if(codes.length)        acts.push({go:"drill", label:"Drill "+codes.join(", "), f:{ts:codes}});
+    else if(doms.length===1)acts.push({go:"drill", label:"Drill Domain "+doms[0],   f:{dom:doms[0]}});
+    else if(doms.length>1)  acts.push({go:"drill", label:"Drill "+doms.map(d=>"Domain "+d).join(" and "),
+                                       f:{ts:step.ts.filter(c=>doms.includes(c[0]))}});
+    else                    acts.push({go:"drill", label:"Open the Drill", f:{}});
+  }
+  // de-duplicate by destination, keeping the most specific
+  return acts.filter((a,i)=>acts.findIndex(x=>x.go===a.go)===i);
+}
+function applyFilters(f){
+  $("#fdom").value=""; $("#fscen").value=""; $("#fmode").value=""; tsFilter=null;
+  if(!f) return;
+  if(f.mode) $("#fmode").value = f.mode;
+  if(f.dom)  $("#fdom").value  = f.dom;
+  if(f.ts && f.ts.length) tsFilter = f.ts;
+  renderDrill();
+}
 
 /* plan */
 function renderTrackSel(){
@@ -1060,8 +1171,8 @@ function renderTrackSel(){
   }).join("");
   document.querySelectorAll("#tsel button").forEach(b=>b.addEventListener("click",()=>{
     track = b.dataset.t; store.set("ccarf_track",track);
-    doneSteps = store.get(doneKey(),[]); activeStep = 1;
-    renderTrackSel(); renderTrackHead(); renderRail(); renderDay();
+    doneSteps = store.get(doneKey(),[]); taskDone = store.get(taskKey(),{}); activeStep = 1; activeTask = null;
+    renderTrackSel(); renderTrackHead(); renderRail(); renderPane();
   }));
 }
 function renderTrackHead(){
@@ -1074,38 +1185,112 @@ function renderTrackHead(){
 }
 function renderRail(){
   const t = T();
+  const up = document.querySelector("#unitplural");
+  if(up) up.textContent = t.unit.toLowerCase() + "s";
   document.querySelector("#rail").innerHTML = t.steps.map(d=>{
-    const on = doneSteps.includes(d.n);
+    const n = d.tasks.filter((_,i)=>taskDone[`${d.n}.${i}`]).length;
+    const all = n === d.tasks.length;
+    const on = all || doneSteps.includes(d.n);
     return `<button data-d="${d.n}" aria-current="${d.n===activeStep}">
-      <span class="tick ${on?"on":""}">&check;</span>
+      <span class="tick ${on?"on":(n?"part":"")}">${on?"&check;":(n?"&middot;":"&check;")}</span>
       <span class="dnum">${t.unit[0]}${d.n}</span>
       <span>${d.short}</span></button>`;
   }).join("");
   document.querySelectorAll("#rail button").forEach(b=>b.addEventListener("click",()=>{
-    activeStep = +b.dataset.d; renderRail(); renderDay();
+    activeStep = +b.dataset.d; renderRail(); renderPane();
   }));
 }
-function renderDay(){
+function renderPane(){
   const t = T();
   const d = t.steps.find(x=>x.n===activeStep) || t.steps[0];
-  const on = doneSteps.includes(d.n);
-  document.querySelector("#daypanel").innerHTML = `
-    <div class="day-head">
-      <h2>${t.unit} ${d.n} &middot; ${d.title}</h2>
-      ${d.dur?`<span class="dur">${d.dur}</span>`:""}
-    </div>
-    <div class="tscodes">${d.ts.map(x=>`<span class="ts">${x==="all"?"all task statements":x}</span>`).join("")}</div>
-    <ul class="tasks">${d.tasks.map((x,i)=>`<li><span>${i+1}</span><span>${x}</span></li>`).join("")}</ul>
+  const doneCount = d.tasks.filter((_,i)=>taskDone[`${d.n}.${i}`]).length;
+
+  document.querySelector("#panebody").innerHTML = `
+    <select class="ptrack" id="ptrack">${TRACK_ORDER.map(k=>
+      `<option value="${k}" ${k===track?"selected":""}>${TRACKS[k].name} track &middot; ${TRACKS[k].steps.length} ${TRACKS[k].unit.toLowerCase()}s</option>`).join("")}</select>
+    <div class="daychips">${t.steps.map(x=>{
+      const n = x.tasks.filter((_,i)=>taskDone[`${x.n}.${i}`]).length;
+      return `<button data-d="${x.n}" class="${n===x.tasks.length?"done":""}" aria-current="${x.n===activeStep}"
+        title="${t.unit} ${x.n} &middot; ${x.short}">${t.unit[0]}${x.n}</button>`;
+    }).join("")}</div>
+    <p class="ptitle">${t.unit} ${d.n} &middot; ${d.title}</p>
+    <span class="pmeta">${doneCount} of ${d.tasks.length} tasks${d.dur?" &middot; "+d.dur:""}</span>
+    <ul class="tasks">${d.tasks.map((x,i)=>{
+      const done = !!taskDone[`${d.n}.${i}`];
+      const act  = activeTask && activeTask.step===d.n && activeTask.idx===i;
+      const acts = actionsFor(x, d);
+      return `<li>
+        <button class="tkbox ${done?"on":""}" data-i="${i}" aria-label="Mark task ${i+1} done">&check;</button>
+        <span class="tkbody ${done?"done":""} ${act?"active":""}">${x}
+          ${acts.length?`<span class="chips-row">${acts.map((a,j)=>
+            `<button class="chipbtn" data-act="${i}:${j}">${a.label}</button>`).join("")}</span>`:""}
+        </span></li>`;
+    }).join("")}</ul>
     ${d.gate?`<div class="gate"><b>Gate</b><br>${d.gate}</div>`:""}
-    <div class="done-row">
-      <button class="btn ${on?"ghost":""}" id="markdone">${on?`Mark ${t.unit.toLowerCase()} ${d.n} not done`:`Mark ${t.unit.toLowerCase()} ${d.n} done`}</button>
-      <span style="font-family:var(--mono);font-size:12px;color:var(--txt3)">${doneSteps.length} of ${t.steps.length} complete</span>
+    <div class="daymeta">
+      <button id="allon">Mark all done</button>
+      <button id="alloff">Clear</button>
     </div>`;
-  document.querySelector("#markdone").addEventListener("click",()=>{
-    doneSteps = on ? doneSteps.filter(x=>x!==d.n) : [...doneSteps,d.n];
-    store.set(doneKey(),doneSteps); renderRail(); renderDay();
+
+  renderFoldLabel();
+  document.querySelector("#ptrack").addEventListener("change",e=>{
+    track = e.target.value; store.set("ccarf_track",track);
+    doneSteps = store.get(doneKey(),[]); taskDone = store.get(taskKey(),{});
+    activeStep = 1; activeTask = null;
+    renderTrackSel(); renderTrackHead(); renderRail(); renderPane();
+  });
+  document.querySelectorAll("#panebody .daychips button").forEach(b=>b.addEventListener("click",()=>{
+    activeStep = +b.dataset.d; activeTask = null; renderRail(); renderPane();
+  }));
+  document.querySelectorAll("#panebody .tkbox").forEach(b=>b.addEventListener("click",()=>{
+    const k = `${d.n}.${b.dataset.i}`;
+    if(taskDone[k]) delete taskDone[k]; else taskDone[k] = true;
+    store.set(taskKey(),taskDone); renderRail(); renderPane();
+  }));
+  document.querySelectorAll("#panebody .chipbtn").forEach(b=>b.addEventListener("click",()=>{
+    const [i,j] = b.dataset.act.split(":").map(Number);
+    const a = actionsFor(d.tasks[i], d)[j];
+    if(a.go === "track"){
+      taskDone[`${d.n}.${i}`] = true; store.set(taskKey(),taskDone);
+      track = a.track; store.set("ccarf_track",track);
+      doneSteps = store.get(doneKey(),[]); taskDone = store.get(taskKey(),{});
+      activeStep = 1; activeTask = null;
+      renderTrackSel(); renderTrackHead(); renderRail(); renderPane();
+      return;
+    }
+    activeTask = {step:d.n, idx:i};
+    if(a.go === "drill") applyFilters(a.f);
+    goTo(a.go); renderPane();
+  }));
+  document.querySelector("#allon").addEventListener("click",()=>{
+    d.tasks.forEach((_,i)=>taskDone[`${d.n}.${i}`]=true);
+    store.set(taskKey(),taskDone); renderRail(); renderPane();
+  });
+  document.querySelector("#alloff").addEventListener("click",()=>{
+    d.tasks.forEach((_,i)=>delete taskDone[`${d.n}.${i}`]);
+    store.set(taskKey(),taskDone); renderRail(); renderPane();
   });
 }
+
+/* the plan pane folds away to give the work area full width */
+function setFold(open){
+  const btn = document.querySelector("#panefold");
+  btn.setAttribute("aria-expanded", String(open));
+  document.querySelector(".app").classList.toggle("collapsed", !open);
+  store.set("ccarf_fold", open);
+  renderFoldLabel();
+}
+function renderFoldLabel(){
+  const btn = document.querySelector("#panefold");
+  const open = btn.getAttribute("aria-expanded") === "true";
+  const t = T(), d = t.steps.find(x=>x.n===activeStep) || t.steps[0];
+  const n = d.tasks.filter((_,i)=>taskDone[`${d.n}.${i}`]).length;
+  btn.innerHTML = open
+    ? `Today&rsquo;s plan`
+    : `Today&rsquo;s plan <span class="psum">${t.unit} ${d.n} &middot; ${d.title} &middot; ${n}/${d.tasks.length}</span>`;
+}
+document.querySelector("#panefold").addEventListener("click",()=>
+  setFold(document.querySelector("#panefold").getAttribute("aria-expanded") !== "true"));
 
 /* heuristics */
 $("#hgrid").innerHTML = HEUR.map(h=>`<div class="hcard">
@@ -1142,17 +1327,23 @@ function visible(){
     if(md==="unseen" && a) return false;
     if(md==="wrong" && (!a || a.ok)) return false;
     if(md==="diag" && !DIAG.includes(q.id)) return false;
+    if(tsFilter && !tsFilter.includes(q.ts)) return false;
     return true;
   });
 }
-function renderScore(){
+function renderScore(shown){
   const done = Object.keys(answers).length;
   const right = Object.values(answers).filter(a=>a.ok).length;
+  const filt = (shown !== undefined && shown !== Q.length) ? `<b>${shown}</b> shown &middot; ` : "";
   $("#score").innerHTML = done
-    ? `<b>${right}/${done}</b> correct &middot; ${Math.round(right/done*100)}% &middot; ${Q.length-done} left`
-    : `${Q.length} items &middot; none answered yet`;
+    ? `${filt}<b>${right}/${done}</b> correct &middot; ${Math.round(right/done*100)}% &middot; ${Q.length-done} left`
+    : `${filt}${Q.length} items &middot; none answered yet`;
 }
 function renderDrill(){
+  $("#tspill").innerHTML = tsFilter
+    ? `<span class="fpill">${tsFilter.join(", ")}<button id="tsclear" title="Clear task-statement filter">&times;</button></span>` : "";
+  const tc = $("#tsclear");
+  if(tc) tc.addEventListener("click",()=>{ tsFilter=null; renderDrill(); });
   const list = visible();
   $("#qlist").innerHTML = list.length ? list.map(q=>{
     const a = answers[q.id];
@@ -1193,7 +1384,7 @@ function renderDrill(){
       commit(q,sel);
     });
   });
-  renderScore();
+  renderScore(list.length);
 }
 function commit(q,sel){
   const correct = q.o.map((o,i)=>o[1]?i:-1).filter(i=>i>=0);
@@ -1207,5 +1398,6 @@ $("#reset").addEventListener("click",()=>{
   answers={}; store.set("ccarf_ans",answers); renderDrill();
 });
 
-renderTrackSel(); renderTrackHead(); renderRail(); renderDay(); renderDrill();
+renderTrackSel(); renderTrackHead(); renderRail(); renderPane(); renderDrill();
+setFold(store.get("ccarf_fold", true));
 </script>
