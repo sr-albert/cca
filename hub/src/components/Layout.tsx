@@ -3,6 +3,7 @@ import { Navigate, Outlet, useLocation, useParams } from "react-router";
 import { catalog } from "../data";
 import { resolveCert } from "../lib/certs";
 import { useProgress } from "../state/progress";
+import { PlanPane } from "./plan/PlanPane";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
 
@@ -25,6 +26,7 @@ export function Layout() {
           <main className="min-w-0 flex-1 px-4 py-6 md:px-8">
             <Outlet />
           </main>
+          {cert === "ccarf" && <PlanPane />}
         </div>
       </div>
     </div>
