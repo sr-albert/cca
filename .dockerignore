@@ -1,0 +1,9 @@
+.git
+**/node_modules
+hub/dist
+hub/src/data/generated
+site
+reference
+docs
+.playwright-mcp
+**/.DS_Store

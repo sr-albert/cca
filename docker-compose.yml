@@ -1,0 +1,22 @@
+services:
+  hub:
+    build:
+      context: .
+      dockerfile: hub/Dockerfile
+    ports:
+      - "8080:80"
+
+  hub-dev:
+    profiles: ["dev"]
+    image: node:22-alpine
+    working_dir: /app/hub
+    command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./hub:/app/hub
+      - ./mirror:/app/mirror:ro
+      - hub_node_modules:/app/hub/node_modules
+
+volumes:
+  hub_node_modules:
