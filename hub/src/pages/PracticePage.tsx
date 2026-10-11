@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "react-router";
 import { Html } from "../components/Html";
 import { FilterBar } from "../components/practice/FilterBar";
@@ -18,7 +18,18 @@ export default function PracticePage() {
   const answer = useProgress((s) => s.answer);
   const resetAnswers = useProgress((s) => s.resetAnswers);
   const all = questionsByCert[cert];
-  const shown = useMemo(() => filterQuestions(all, filter, answers, DIAGNOSTIC), [all, filter, answers]);
+  // Cards answered under the current filter stay visible (with their feedback) until the filter changes.
+  const search = params.toString();
+  const [kept, setKept] = useState<{ search: string; ids: string[] }>({ search, ids: [] });
+  const keptIds = useMemo(() => (kept.search === search ? kept.ids : []), [kept, search]);
+  const shown = useMemo(() => {
+    const unkept = Object.fromEntries(Object.entries(answers).filter(([id]) => !keptIds.includes(id)));
+    return filterQuestions(all, filter, unkept, DIAGNOSTIC);
+  }, [all, filter, answers, keptIds]);
+  const submit = (id: string, selected: number[], correct: boolean) => {
+    setKept({ search, ids: [...keptIds, id] });
+    answer(id, selected, correct);
+  };
 
   const update = (patch: Partial<PracticeFilter>) => setParams(filterToSearch({ ...filter, ...patch }));
   const reset = () => {
@@ -39,7 +50,7 @@ export default function PracticePage() {
       </div>
       {shown.length ? (
         shown.map((q) => (
-          <QuestionCard key={q.id} q={q} answer={answers[q.id]} onSubmit={(sel) => answer(q.id, sel, isCorrect(q, sel))} />
+          <QuestionCard key={q.id} q={q} answer={answers[q.id]} onSubmit={(sel) => submit(q.id, sel, isCorrect(q, sel))} />
         ))
       ) : (
         <p className="mt-6 text-muted">No items match these filters.</p>

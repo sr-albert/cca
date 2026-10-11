@@ -38,6 +38,15 @@ describe("Practice", () => {
     expect(c.getByText("Correct")).toBeInTheDocument();
   });
 
+  it("keeps an answered card visible under Unanswered only until the filter changes", async () => {
+    renderAt("/ccarf/practice?ids=Q01,Q02&status=unanswered");
+    await userEvent.click(within(card("Q01")).getByRole("button", { name: /Continue the loop while/ }));
+    expect(within(card("Q01")).getByText("Correct")).toBeInTheDocument();
+    expect(within(card("Q01")).getByText(/only reliable termination signal/)).toBeInTheDocument();
+    await userEvent.selectOptions(screen.getByRole("combobox", { name: "Source" }), "mine");
+    expect(screen.queryByTestId("q-Q01")).not.toBeInTheDocument();
+  });
+
   it("filters to previously wrong items from the URL", async () => {
     useProgress.getState().answer("Q01", [1], false);
     useProgress.getState().answer("Q02", [0], true);
