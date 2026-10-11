@@ -4,10 +4,15 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "extract": "tsx scripts/extract-mirror.ts",
+    "predev": "npm run extract",
     "dev": "vite",
+    "prebuild": "npm run extract",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
+    "pretest": "npm run extract",
     "test": "vitest run",
+    "pretypecheck": "npm run extract",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },
