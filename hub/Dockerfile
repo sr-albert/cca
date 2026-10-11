@@ -3,8 +3,9 @@ FROM node:22-alpine AS build
 WORKDIR /app/hub
 COPY hub/package.json hub/package-lock.json ./
 RUN npm ci
-COPY hub/ ./
-COPY mirror/ /app/mirror/
+# The whole context, narrowed by .dockerignore: mirror/ comes along only if it exists,
+# and without it the extractor builds CCAR-F only.
+COPY . /app/
 RUN npm run build
 
 FROM nginx:1.27-alpine
