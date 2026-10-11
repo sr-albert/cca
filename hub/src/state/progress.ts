@@ -11,7 +11,8 @@ export type ProgressData = {
   plan: { track: TrackId; doneTasks: Record<TrackId, Record<number, number[]>>; paneOpen: boolean };
   cards: Record<string, CardMark>;
   lastVisit: { cert: CertId; path: string } | null;
-  activeStep: number;
+  /** The step shown in the plan; null follows the current (lowest unfinished) step. */
+  activeStep: number | null;
 };
 
 type ProgressActions = {
@@ -33,7 +34,7 @@ export const initialProgress = (): ProgressData => ({
   plan: { track: "experienced", doneTasks: { beginner: {}, experienced: {}, expert: {} }, paneOpen: true },
   cards: {},
   lastVisit: null,
-  activeStep: 1,
+  activeStep: null,
 });
 
 /** localStorage that never throws and treats unparseable data as absent. */
@@ -68,7 +69,7 @@ export const useProgress = create<ProgressState>()(
           for (const id of ids) delete answers[id];
           return { answers };
         }),
-      setTrack: (track) => set((s) => ({ plan: { ...s.plan, track }, activeStep: 1 })),
+      setTrack: (track) => set((s) => ({ plan: { ...s.plan, track }, activeStep: null })),
       setActiveStep: (n) => set({ activeStep: n }),
       setTaskDone: (track, step, idx, done) =>
         set((s) => {
@@ -76,10 +77,10 @@ export const useProgress = create<ProgressState>()(
           const next = done
             ? [...new Set([...current, idx])].sort((a, b) => a - b)
             : current.filter((i) => i !== idx);
-          return { plan: { ...s.plan, doneTasks: { ...s.plan.doneTasks, [track]: { ...s.plan.doneTasks[track], [step]: next } } } };
+          return { activeStep: step, plan: { ...s.plan, doneTasks: { ...s.plan.doneTasks, [track]: { ...s.plan.doneTasks[track], [step]: next } } } };
         }),
       setStepTasks: (track, step, idxs) =>
-        set((s) => ({ plan: { ...s.plan, doneTasks: { ...s.plan.doneTasks, [track]: { ...s.plan.doneTasks[track], [step]: idxs } } } })),
+        set((s) => ({ activeStep: step, plan: { ...s.plan, doneTasks: { ...s.plan.doneTasks, [track]: { ...s.plan.doneTasks[track], [step]: idxs } } } })),
       setPaneOpen: (open) => set((s) => ({ plan: { ...s.plan, paneOpen: open } })),
       markCard: (term, mark) => set((s) => ({ cards: { ...s.cards, [term]: mark } })),
       setLastVisit: (lastVisit) => set({ lastVisit }),

@@ -27,6 +27,20 @@ describe("Today's plan pane", () => {
     expect(useProgress.getState().plan.doneTasks.experienced[step.n]).toEqual([0]);
   });
 
+  it("opens on the current step once earlier steps are done", () => {
+    const [first, second] = tracks.experienced.steps;
+    useProgress.setState({ plan: { ...initialProgress().plan, doneTasks: { beginner: {}, experienced: { [first.n]: first.tasks.map((_, i) => i) }, expert: {} } } });
+    renderAt("/ccarf");
+    expect(pane().getByText(`0 of ${second.tasks.length} tasks`, { exact: false })).toBeInTheDocument();
+  });
+
+  it("stays on a step while its tasks are being ticked", async () => {
+    const first = tracks.experienced.steps[0];
+    renderAt("/ccarf");
+    await userEvent.click(pane().getByRole("button", { name: "Mark all done" }));
+    expect(pane().getByText(`${first.tasks.length} of ${first.tasks.length} tasks`, { exact: false })).toBeInTheDocument();
+  });
+
   it("opens Practice with the task's filter", async () => {
     const step = tracks.experienced.steps.find((s) => s.tasks.some((t) => t.actions.some((a) => a.go === "practice")))!;
     const action = step.tasks.flatMap((t) => t.actions).find((a) => a.go === "practice")!;

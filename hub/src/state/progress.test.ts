@@ -13,7 +13,7 @@ describe("progress store", () => {
   it("starts on the experienced track with nothing answered", () => {
     expect(state().plan.track).toBe("experienced");
     expect(state().answers).toEqual({});
-    expect(state().activeStep).toBe(1);
+    expect(state().activeStep).toBeNull();
   });
 
   it("records an answer and saves it under studyhub:v1, without activeStep", () => {
@@ -48,11 +48,11 @@ describe("progress store", () => {
     expect(state().plan.doneTasks.beginner[1]).toEqual([]);
   });
 
-  it("switching track resets the active step", () => {
+  it("switching track goes back to following the current step", () => {
     state().setActiveStep(5);
     state().setTrack("expert");
     expect(state().plan.track).toBe("expert");
-    expect(state().activeStep).toBe(1);
+    expect(state().activeStep).toBeNull();
   });
 
   it("falls back to defaults when saved data is corrupt", async () => {
