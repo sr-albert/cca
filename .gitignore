@@ -1,2 +1,6 @@
 .playwright-mcp/
 *.png
+mirror/
+hub/node_modules/
+hub/dist/
+hub/src/data/generated/

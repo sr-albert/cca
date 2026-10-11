@@ -1,0 +1,40 @@
+.content p { margin: 0.6em 0; }
+.content a { color: var(--accent); }
+.content code { font-family: var(--font-mono); font-size: 0.88em; background: var(--accent-soft); padding: 0.05em 0.3em; border-radius: 3px; }
+.content pre { font-family: var(--font-mono); font-size: 13px; line-height: 1.55; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 14px 16px; overflow-x: auto; white-space: pre; }
+.content pre i { color: var(--muted); }
+.content pre b { color: var(--accent); font-weight: 500; }
+.content pre u { text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.content .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0 0 6px; }
+.content .lede { font-family: var(--font-serif); font-size: 17px; color: var(--muted); margin: 0 0 18px; max-width: 46rem; }
+.content .note { border-left: 3px solid var(--accent); background: var(--surface); padding: 10px 14px; margin: 14px 0; font-size: 15px; }
+.content .place { overflow-x: auto; }
+.content .place h3 { font-family: var(--font-serif); font-size: 22px; margin: 0 0 6px; }
+.content table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+.content th, .content td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.content .axes { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 14px 0; }
+.content .axis { border: 1px solid var(--line); background: var(--surface); padding: 12px 14px; border-radius: 4px; }
+.content .axis h4 { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 6px; }
+.content .axis ol { margin: 0; padding-left: 18px; }
+.content .tells { border: 1px solid var(--line); background: var(--surface); padding: 14px 16px; border-radius: 4px; margin: 18px 0; }
+.content .tells h3 { font-family: var(--font-serif); font-size: 19px; margin: 0; }
+.content .tells ul { margin: 10px 0 0; padding-left: 18px; }
+.content .ghost-api ul { list-style: none; padding-left: 0; }
+.content .no { color: var(--bad); font-weight: 700; }
+.content .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin: 14px 0 20px; }
+.content .facts div { border: 1px solid var(--line); background: var(--surface); padding: 8px 10px; border-radius: 4px; }
+.content .facts dt { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; color: var(--muted); }
+.content .facts dd { margin: 2px 0 0; font-weight: 600; }
+
+/* Mirror lesson diagrams reference these variables and classes. */
+.diagram { --dg: var(--accent); --dg-soft: var(--accent-soft); --dg-ink: var(--accent); --ink-3: var(--muted); --line-2: var(--line); --line-strong: var(--muted); display: block; width: 100%; max-width: 100%; height: auto; }
+.dg-title { font-family: var(--font-sans); font-weight: 700; font-size: 13px; letter-spacing: 0.12em; fill: var(--muted); }
+.dg-node { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; }
+.dg-em { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.75; }
+.dg-t { font-family: var(--font-sans); font-weight: 600; font-size: 13px; fill: var(--ink); }
+.dg-lbl { font-family: var(--font-mono); font-weight: 500; font-size: 12px; fill: var(--muted); }
+.dg-lbl.hl { fill: var(--accent); font-weight: 600; }
+.dg-div { stroke: var(--line); stroke-width: 1.5; stroke-dasharray: 5 6; }
+.dg-arw { stroke: var(--muted); stroke-width: 1.75; fill: none; }
+.dg-hl { stroke: var(--accent); stroke-width: 2.25; fill: none; }
+.dg-hl-fill { fill: var(--accent); }

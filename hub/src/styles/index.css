@@ -1,0 +1,49 @@
+@import "tailwindcss";
+@import "./content.css";
+
+:root {
+  --paper: #f4efe6;
+  --surface: #fbf8f2;
+  --pane: #efe8db;
+  --ink: #1f1b16;
+  --muted: #6f6455;
+  --line: #d9cfbf;
+  --accent: #b4441a;
+  --accent-soft: #b4441a1a;
+  --good: #3b6e4b;
+  --bad: #983a31;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #17140f;
+    --surface: #1f1b15;
+    --pane: #1b1813;
+    --ink: #ece4d6;
+    --muted: #a89a85;
+    --line: #3a3328;
+    --accent: #e07a52;
+    --accent-soft: #e07a521f;
+    --good: #6fae80;
+    --bad: #d4776b;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-pane: var(--pane);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-good: var(--good);
+  --color-bad: var(--bad);
+  --font-serif: "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+}
