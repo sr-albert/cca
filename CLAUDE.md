@@ -31,5 +31,6 @@ cd hub && npm run typecheck && npm run lint
 - **Plan actions are data.** Each task carries `actions` (practice filter, reference section, lesson or track switch). They were generated from the old regex in `site/index.html` during the move; edit them as data now.
 - **The diagnostic is the explicit ID list** in `content/ccarf/diagnostic.ts`.
 - **Progress** lives in `src/state/progress.ts` (Zustand, `localStorage` key `studyhub:v1`). Answers are keyed by question ID, so never renumber IDs.
+- **Guided tour**: `src/tour/steps.ts` holds the steps as data (route, `data-tour` markers, copy). `useTour.ts` drives driver.js across routes. It auto-starts on CCAR-F Home while `tourSeen` is false and replays from "Take the tour". When you rename or remove a marked element, keep its `data-tour` attribute: `steps.test.ts` fails otherwise.
 - **Routes** are `/:cert/{plan,lessons,lessons/:slug,practice,cards,reference}`. Plan and Reference are CCAR-F only. Practice filters live in the URL query (`lib/filters.ts`).
 - `src/content/ccarf/parity.test.ts` checks the moved content against `site/index.html`, and skips itself when `site/` is absent. Its "identical to a fresh migration" test pins the one-time move: delete that test (keep the count checks) the first time you change content on purpose.

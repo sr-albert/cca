@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 import type { CertId } from "../data/schema";
 import { navItems } from "../lib/certs";
+import { TourButton } from "../tour/TourLauncher";
 
 export function NavLinks({ cert, vertical }: { cert: CertId; vertical?: boolean }) {
   return (
@@ -28,6 +29,7 @@ export function Sidebar({ cert }: { cert: CertId }) {
     <aside data-tour="nav" className="hidden w-48 shrink-0 border-r border-line px-3 py-5 md:block">
       <div className="mb-5 px-3 font-mono text-xs uppercase tracking-widest">Study Hub</div>
       <NavLinks cert={cert} vertical />
+      <div className="mt-6 px-3"><TourButton /></div>
     </aside>
   );
 }

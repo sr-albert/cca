@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router";
 import { catalog, getCert } from "../data";
 import type { CertId } from "../data/schema";
 import { certSwitchPath } from "../lib/certs";
+import { TourButton } from "../tour/TourLauncher";
 import { Html } from "./Html";
 import { NavLinks } from "./Sidebar";
 
@@ -23,6 +24,7 @@ export function TopBar({ cert }: { cert: CertId }) {
             </Link>
           ))}
         </nav>
+        <TourButton className="md:hidden" />
       </div>
       <div data-tour="nav-top" className="mt-2 md:hidden">
         <NavLinks cert={cert} />
