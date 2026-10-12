@@ -25,7 +25,7 @@ export function NavLinks({ cert, vertical }: { cert: CertId; vertical?: boolean 
 
 export function Sidebar({ cert }: { cert: CertId }) {
   return (
-    <aside className="hidden w-48 shrink-0 border-r border-line px-3 py-5 md:block">
+    <aside data-tour="nav" className="hidden w-48 shrink-0 border-r border-line px-3 py-5 md:block">
       <div className="mb-5 px-3 font-mono text-xs uppercase tracking-widest">Study Hub</div>
       <NavLinks cert={cert} vertical />
     </aside>

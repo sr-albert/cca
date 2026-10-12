@@ -27,7 +27,7 @@ export function FilterBar({ cert, filter, questions, onChange }: Props) {
   const num = (v: string) => (v ? Number(v) : undefined);
 
   return (
-    <div className="my-4 flex flex-wrap items-center gap-2">
+    <div data-tour="filters" className="my-4 flex flex-wrap items-center gap-2">
       <select aria-label="Domain" className={select} value={filter.domain ?? ""} onChange={(e) => onChange({ domain: num(e.target.value) })}>
         <option value="">All domains</option>
         {domains.map((d) => (

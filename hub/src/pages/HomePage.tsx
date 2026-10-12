@@ -58,7 +58,7 @@ export default function HomePage() {
       )}
 
       <h3 className="mt-8 font-mono text-xs uppercase tracking-widest text-muted">Progress by domain</h3>
-      <div className="mt-3 space-y-2">
+      <div data-tour="domains" className="mt-3 space-y-2">
         {stats.map((s) => (
           <Link
             key={s.n}

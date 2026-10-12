@@ -24,7 +24,7 @@ export function TopBar({ cert }: { cert: CertId }) {
           ))}
         </nav>
       </div>
-      <div className="mt-2 md:hidden">
+      <div data-tour="nav-top" className="mt-2 md:hidden">
         <NavLinks cert={cert} />
       </div>
     </header>

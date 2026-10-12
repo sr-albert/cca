@@ -17,7 +17,7 @@ export function QuestionCard({ q, answer, onSubmit }: Props) {
     .join(" · ");
 
   return (
-    <article data-testid={`q-${q.id}`} className="my-4 rounded border border-line bg-surface p-4">
+    <article data-testid={`q-${q.id}`} data-tour="question" className="my-4 rounded border border-line bg-surface p-4">
       <div className="mb-2 flex flex-wrap items-center gap-2 font-mono text-xs text-muted">
         <span>{meta}</span>
         <span className="rounded border border-line px-1.5">{SOURCE_LABEL[q.source]}</span>

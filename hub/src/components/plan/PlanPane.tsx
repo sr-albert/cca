@@ -17,6 +17,7 @@ export function PlanPane() {
     <>
       <aside
         aria-label="Today's plan"
+        data-tour={paneOpen ? "plan-pane" : undefined}
         className={`hidden shrink-0 border-l border-line bg-pane lg:block ${paneOpen ? "w-80 p-4" : "w-12"}`}
       >
         {paneOpen ? (

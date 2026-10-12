@@ -15,7 +15,7 @@ export default function PlanPage() {
       <h2 className="font-serif text-3xl">Three Roads to CCAR-F</h2>
       <Html className="content mt-4" html={statics.place} />
 
-      <div role="group" aria-label="Choose a track" className="mt-6 grid gap-2 sm:grid-cols-3">
+      <div role="group" aria-label="Choose a track" data-tour="tracks" className="mt-6 grid gap-2 sm:grid-cols-3">
         {trackOrder.map((id) => (
           <button
             key={id}
@@ -49,7 +49,7 @@ export default function PlanPage() {
       </div>
 
       <h3 className="mt-8 font-serif text-xl">All {track.unit.toLowerCase()}s</h3>
-      <ol className="mt-3 divide-y divide-line rounded border border-line bg-surface">
+      <ol data-tour="plan-steps" className="mt-3 divide-y divide-line rounded border border-line bg-surface">
         {track.steps.map((s) => {
           const n = doneCount(s, doneTasks);
           const complete = n === s.tasks.length;
