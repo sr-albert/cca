@@ -13,6 +13,8 @@ export type ProgressData = {
   lastVisit: { cert: CertId; path: string } | null;
   /** The step shown in the plan; null follows the current (lowest unfinished) step. */
   activeStep: number | null;
+  /** True once the guided tour was finished or skipped. */
+  tourSeen: boolean;
 };
 
 type ProgressActions = {
@@ -25,6 +27,7 @@ type ProgressActions = {
   setPaneOpen: (open: boolean) => void;
   markCard: (term: string, mark: CardMark) => void;
   setLastVisit: (v: { cert: CertId; path: string }) => void;
+  setTourSeen: (v: boolean) => void;
 };
 
 export type ProgressState = ProgressData & ProgressActions;
@@ -35,6 +38,7 @@ export const initialProgress = (): ProgressData => ({
   cards: {},
   lastVisit: null,
   activeStep: null,
+  tourSeen: false,
 });
 
 /** localStorage that never throws and treats unparseable data as absent. */
@@ -84,12 +88,13 @@ export const useProgress = create<ProgressState>()(
       setPaneOpen: (open) => set((s) => ({ plan: { ...s.plan, paneOpen: open } })),
       markCard: (term, mark) => set((s) => ({ cards: { ...s.cards, [term]: mark } })),
       setLastVisit: (lastVisit) => set({ lastVisit }),
+      setTourSeen: (tourSeen) => set({ tourSeen }),
     }),
     {
       name: STORAGE_KEY,
       version: 1,
       storage: createJSONStorage(() => safeStorage),
-      partialize: (s) => ({ answers: s.answers, plan: s.plan, cards: s.cards, lastVisit: s.lastVisit }),
+      partialize: (s) => ({ answers: s.answers, plan: s.plan, cards: s.cards, lastVisit: s.lastVisit, tourSeen: s.tourSeen }),
     },
   ),
 );
