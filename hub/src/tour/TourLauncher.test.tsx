@@ -63,6 +63,17 @@ describe("guided tour", () => {
     expect(router.state.location.pathname).toBe("/ccarf/plan");
   });
 
+  it("step 3 highlights the plan pane it opens when the pane was collapsed", async () => {
+    useProgress.getState().setPaneOpen(false);
+    renderAt("/ccarf");
+    await screen.findByText("Welcome to your study hub", {}, { timeout: 3000 });
+    await userEvent.click(document.querySelector<HTMLButtonElement>(".driver-popover-next-btn")!);
+    await screen.findByText("Pick your track", {}, { timeout: 3000 });
+    await userEvent.click(document.querySelector<HTMLButtonElement>(".driver-popover-next-btn")!);
+    await screen.findByText("Today's tasks live here", {}, { timeout: 3000 });
+    await waitFor(() => expect(document.querySelector(".driver-active-element")?.getAttribute("data-tour")).toBe("plan-pane"));
+  });
+
   it("navigating away closes the tour", async () => {
     const { router } = renderAt("/ccarf");
     await screen.findByText("Welcome to your study hub", {}, { timeout: 3000 });

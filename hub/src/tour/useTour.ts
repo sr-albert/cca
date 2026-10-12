@@ -1,5 +1,6 @@
 import { driver, type Driver, type DriveStep } from "driver.js";
 import { useCallback, useEffect, useRef } from "react";
+import { flushSync } from "react-dom";
 import { useLocation, useNavigate } from "react-router";
 import { useProgress } from "../state/progress";
 import { needsNavigation, pickTarget, tourSelector } from "./resolve";
@@ -48,7 +49,8 @@ export function useTour(): () => void {
         pending.current = step.path;
         navigate(step.path);
       }
-      step.before?.();
+      // Commit the store change before driver.js resolves the target (e.g. the pane it opens).
+      if (step.before) flushSync(step.before);
       if (d.isActive()) d.moveTo(i);
       else d.drive(i);
     },
