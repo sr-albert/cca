@@ -22,6 +22,8 @@ cd hub && npm test                         # all tests; one file: npx vitest run
 cd hub && npm run typecheck && npm run lint
 ```
 
+`docker compose up` also starts the feedback service (`hub/server/`, behind nginx at `/api/feedback`); copy `hub/server/feedback.env.example` to the gitignored `hub/server/feedback.env` to set the Discord webhook and IP hash secret.
+
 `npm run dev`, `build`, `test` and `typecheck` run the extractor first. Without `mirror/`, the hub builds with CCAR-F only.
 
 ## How `hub/` is put together

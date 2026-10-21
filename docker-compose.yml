@@ -7,13 +7,27 @@ services:
         GIT_COMMIT: "${GIT_COMMIT:-}"
         GIT_DIRTY: "${GIT_DIRTY:-}"
     ports:
-      - "8080:80"
+      - "127.0.0.1:8080:80"
+
+  feedback:
+    build:
+      context: .
+      dockerfile: hub/Dockerfile
+      target: feedback
+    env_file:
+      - path: hub/server/feedback.env
+        required: false
+    volumes:
+      - feedback_data:/data
+    restart: unless-stopped
 
   hub-dev:
     profiles: ["dev"]
     image: node:22-alpine
     working_dir: /app/hub
     command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+    environment:
+      FEEDBACK_URL: http://feedback-dev:8787
     ports:
       - "5173:5173"
     volumes:
@@ -21,5 +35,23 @@ services:
       - ./mirror:/app/mirror:ro
       - hub_node_modules:/app/hub/node_modules
 
+  feedback-dev:
+    profiles: ["dev"]
+    image: node:22-alpine
+    working_dir: /app/hub
+    command: sh -c "npm ci && npm run server"
+    environment:
+      DATA_DIR: /data
+    env_file:
+      - path: hub/server/feedback.env
+        required: false
+    volumes:
+      - ./hub:/app/hub
+      - feedback_dev_node_modules:/app/hub/node_modules
+      - feedback_dev_data:/data
+
 volumes:
   hub_node_modules:
+  feedback_dev_node_modules:
+  feedback_data:
+  feedback_dev_data:
