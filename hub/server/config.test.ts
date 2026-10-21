@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { mkdtempSync, rmSync, statSync } from "node:fs";
+import { mkdtempSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -25,6 +25,14 @@ describe("loadConfig", () => {
     expect(String(warn.mock.calls[0][0])).toContain(join(dir, "ip-hash.secret"));
     expect(String(warn.mock.calls[0][0])).not.toContain(a.ipSecret);
     expect(statSync(join(dir, "ip-hash.secret")).mode & 0o777).toBe(0o600);
+  });
+
+  it("regenerates a secret file that is empty", () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    writeFileSync(join(dir, "ip-hash.secret"), "  \n");
+    const c = loadConfig({ DATA_DIR: dir });
+    expect(c.ipSecret).toHaveLength(64);
+    expect(loadConfig({ DATA_DIR: dir }).ipSecret).toBe(c.ipSecret);
   });
 
   it("prefers IP_HASH_SECRET from the env", () => {

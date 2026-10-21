@@ -160,6 +160,17 @@ describe("POST /api/feedback", () => {
     expect(post).not.toHaveBeenCalled();
   });
 
+  it("delivers reports stored as disabled once a webhook is set", async () => {
+    await start({ DISCORD_WEBHOOK_URL: "" });
+    await send(samplePayload());
+    expect(store.all()[0].delivery).toBe("disabled");
+    await new Promise((r) => server.close(r));
+    await start();
+    await app.deliverPending();
+    expect(post).toHaveBeenCalledTimes(1);
+    expect(store.all()[0].delivery).toBe("delivered");
+  });
+
   it("rejects a mismatched Origin when allowedOrigin is set", async () => {
     await start({ ALLOWED_ORIGIN: "https://hub.example.com" });
     expect((await send(samplePayload(), { origin: "https://evil.example" })).status).toBe(403);

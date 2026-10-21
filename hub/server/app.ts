@@ -58,7 +58,8 @@ export function createApp({ config, store, post = postToDiscord, now = () => new
   async function deliver(report: StoredReport): Promise<boolean> {
     if (!config.webhookUrl || inFlight.has(report.id)) return false;
     // A retry pass works from a snapshot: re-read the status so a report delivered meanwhile is not posted twice.
-    if (store.all().find((r) => r.id === report.id)?.delivery !== "undelivered") return true;
+    const current = store.all().find((r) => r.id === report.id)?.delivery;
+    if (current !== "undelivered" && current !== "disabled") return true;
     inFlight.add(report.id);
     try {
       const history = historyLine(reporterHistory(store.all(), report));
@@ -81,7 +82,7 @@ export function createApp({ config, store, post = postToDiscord, now = () => new
     if (passRunning) return;
     passRunning = true;
     try {
-      const pending = store.all().filter((r) => r.delivery === "undelivered");
+      const pending = store.all().filter((r) => r.delivery === "undelivered" || (config.webhookUrl && r.delivery === "disabled"));
       for (const report of pending) {
         if (inFlight.has(report.id)) continue;
         if (!(await deliver(report))) break;
