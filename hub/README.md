@@ -7,6 +7,12 @@ One local app for the CCAR-F study plan and the Cert Labs mirror (CCAR-F, CCAR-P
     docker compose up                          # http://localhost:8080
     docker compose --profile dev up hub-dev    # live reload, http://localhost:5173
 
+To stamp the build's content version (commit, dirty flag) into feedback reports:
+
+    GIT_COMMIT=$(git rev-parse --short HEAD) GIT_DIRTY=$(git status --porcelain | head -c1) docker compose up --build
+
+Without these, the Docker build reports commit `unknown`; `npm run dev` reports `dev`.
+
 Without Docker:
 
     cd hub && npm install && npm run dev

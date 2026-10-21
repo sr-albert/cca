@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -131,6 +132,10 @@ export function run(mirrorPath: string, outDir: string): MirrorFile {
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, "mirror.js"), `export default JSON.parse(${JSON.stringify(JSON.stringify(data))});\n`);
   writeFileSync(join(outDir, "mirror.d.ts"), "declare const mirror: unknown;\nexport default mirror;\n");
+  const mirror = data.mirrorAvailable
+    ? createHash("sha256").update(readFileSync(mirrorPath)).digest("hex").slice(0, 8)
+    : "none";
+  writeFileSync(join(outDir, "fingerprint.json"), `${JSON.stringify({ mirror })}\n`);
   return data;
 }
 

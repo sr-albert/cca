@@ -1,4 +1,5 @@
 // @vitest-environment node
+import { createHash } from "node:crypto";
 import { existsSync, mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -89,5 +90,19 @@ describe("run", () => {
     const written = readModule(dir) as { mirrorAvailable: boolean; questions: unknown[] };
     expect(written.mirrorAvailable).toBe(true);
     expect(written.questions).toHaveLength(2);
+  });
+
+  it("fingerprints a missing mirror as none", () => {
+    const dir = mkdtempSync(join(tmpdir(), "hub-"));
+    run(join(dir, "nope.html"), dir);
+    expect(JSON.parse(readFileSync(join(dir, "fingerprint.json"), "utf8"))).toEqual({ mirror: "none" });
+  });
+
+  it("fingerprints the mirror with the first 8 hex of its sha256", () => {
+    const dir = mkdtempSync(join(tmpdir(), "hub-"));
+    run(fixturePath, dir);
+    const { mirror } = JSON.parse(readFileSync(join(dir, "fingerprint.json"), "utf8"));
+    expect(mirror).toMatch(/^[0-9a-f]{8}$/);
+    expect(mirror).toBe(createHash("sha256").update(readFileSync(fixturePath)).digest("hex").slice(0, 8));
   });
 });

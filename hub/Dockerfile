@@ -6,6 +6,9 @@ RUN npm ci
 # The whole context, narrowed by .dockerignore: mirror/ comes along only if it exists,
 # and without it the extractor builds CCAR-F only.
 COPY . /app/
+ARG GIT_COMMIT
+ARG GIT_DIRTY
+ENV GIT_COMMIT=$GIT_COMMIT GIT_DIRTY=$GIT_DIRTY
 RUN npm run build
 
 FROM nginx:1.27-alpine
