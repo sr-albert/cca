@@ -21,6 +21,17 @@ describe("getReporterId", () => {
     expect(localStorage.getItem(REPORTER_KEY)).toBe(id);
   });
 
+  it("builds a valid v4 UUID when randomUUID is missing and storage throws", () => {
+    vi.stubGlobal("crypto", { getRandomValues: crypto.getRandomValues.bind(crypto) });
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    const id = getReporterId();
+    vi.unstubAllGlobals();
+    expect(isUuid(id)).toBe(true);
+    expect(id[14]).toBe("4");
+  });
+
   it("keeps a stable ID when storage throws", () => {
     vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
       throw new Error("blocked");

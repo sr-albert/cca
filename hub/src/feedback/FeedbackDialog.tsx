@@ -19,9 +19,12 @@ type Props = {
   question?: Question;
   draft: Draft;
   setDraft: Dispatch<SetStateAction<Draft>>;
+  sending: boolean;
+  beginSend: () => boolean;
+  endSend: () => void;
   onClose: () => void;
 };
-type Status = "idle" | "sending" | "sent" | "rate-limited" | "failed";
+type Status = "idle" | "sent" | "rate-limited" | "failed";
 
 const TOOLS: [MarkdownKind, string, string][] = [
   ["bold", "B", "Bold"],
@@ -36,7 +39,18 @@ const ERROR_COPY = {
 };
 const field = "w-full rounded border border-line bg-paper px-2 py-1.5 text-sm text-ink";
 
-export function FeedbackDialog({ cert, pathname, search, prevRoute, question, draft, setDraft, onClose }: Props) {
+function PayloadPreview({ build }: { build: () => FeedbackPayload }) {
+  let json: string | null = null;
+  try {
+    json = JSON.stringify(build(), null, 2);
+  } catch {
+    // fall through to the message below
+  }
+  if (json === null) return <p className="text-xs text-muted">Couldn't build the preview.</p>;
+  return <pre className="max-h-48 overflow-auto rounded border border-line bg-pane p-2 font-mono text-xs">{json}</pre>;
+}
+
+export function FeedbackDialog({ cert, pathname, search, prevRoute, question, draft, setDraft, sending, beginSend, endSend, onClose }: Props) {
   const answer = useProgress((s) => (question ? s.answers[question.id] : undefined));
   const [attach, setAttach] = useState(true);
   const [status, setStatus] = useState<Status>("idle");
@@ -45,7 +59,6 @@ export function FeedbackDialog({ cert, pathname, search, prevRoute, question, dr
   const panel = useRef<HTMLDivElement>(null);
   const area = useRef<HTMLTextAreaElement>(null);
   const caret = useRef<[number, number] | null>(null);
-  const sending = useRef(false);
 
   useEffect(() => panel.current?.focus(), []);
   useLayoutEffect(() => {
@@ -73,13 +86,17 @@ export function FeedbackDialog({ cert, pathname, search, prevRoute, question, dr
   }
 
   async function submit() {
-    if (!ready || sending.current) return;
-    sending.current = true;
-    setStatus("sending");
-    const r = await sendFeedback(payload());
-    sending.current = false;
-    if (r.ok) setDraft(EMPTY_DRAFT);
-    setStatus(r.ok ? "sent" : r.reason);
+    if (!ready || !beginSend()) return;
+    setStatus("idle");
+    try {
+      const r = await sendFeedback(payload());
+      if (r.ok) setDraft(EMPTY_DRAFT);
+      setStatus(r.ok ? "sent" : r.reason);
+    } catch {
+      setStatus("failed");
+    } finally {
+      endSend();
+    }
   }
 
   function format(kind: MarkdownKind) {
@@ -157,14 +174,14 @@ export function FeedbackDialog({ cert, pathname, search, prevRoute, question, dr
               Also sent: this page, your browser details, your study progress and an anonymous ID.{" "}
               <button type="button" aria-expanded={showJson} onClick={() => setShowJson((s) => !s)} className="text-accent underline">See exactly what</button>
             </p>
-            {showJson && <pre className="max-h-48 overflow-auto rounded border border-line bg-pane p-2 font-mono text-xs">{JSON.stringify(payload(), null, 2)}</pre>}
+            {showJson && <PayloadPreview build={payload} />}
 
             {(status === "rate-limited" || status === "failed") && <p role="alert" className="text-sm text-bad">{ERROR_COPY[status]}</p>}
 
             <div className="flex items-center justify-between gap-3">
               <span className="text-xs text-muted">No account needed.</span>
-              <button type="submit" disabled={!ready || status === "sending"} className="rounded bg-accent px-3 py-1 text-sm text-white disabled:opacity-40">
-                {status === "sending" ? "Sending…" : "Send"}
+              <button type="submit" disabled={!ready || sending} className="rounded bg-accent px-3 py-1 text-sm text-paper disabled:opacity-40">
+                {sending ? "Sending…" : "Send"}
               </button>
             </div>
           </form>

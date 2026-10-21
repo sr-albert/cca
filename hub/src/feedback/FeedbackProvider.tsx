@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from "react";
 import { useLocation } from "react-router";
 import type { CertId, Question } from "../data/schema";
 import { FeedbackDialog } from "./FeedbackDialog";
@@ -19,6 +19,19 @@ export function FeedbackProvider({ cert, children }: { cert: CertId; children: R
   const { pathname, search } = useLocation();
   const [session, setSession] = useState<Session | null>(null);
   const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT);
+  // Lives here, not in the dialog, so closing and reopening mid-send can't send the draft twice.
+  const [sending, setSending] = useState(false);
+  const inFlight = useRef(false);
+  const beginSend = useCallback(() => {
+    if (inFlight.current) return false;
+    inFlight.current = true;
+    setSending(true);
+    return true;
+  }, []);
+  const endSend = useCallback(() => {
+    inFlight.current = false;
+    setSending(false);
+  }, []);
   const here = pathname + search;
   const [route, setRoute] = useState<{ current: string; prev: string | null }>({ current: here, prev: null });
   if (route.current !== here) setRoute({ current: here, prev: route.current });
@@ -38,6 +51,9 @@ export function FeedbackProvider({ cert, children }: { cert: CertId; children: R
           question={session.question}
           draft={draft}
           setDraft={setDraft}
+          sending={sending}
+          beginSend={beginSend}
+          endSend={endSend}
           onClose={() => setSession(null)}
         />
       )}

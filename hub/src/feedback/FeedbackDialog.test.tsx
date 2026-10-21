@@ -2,6 +2,7 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, RouterProvider } from "react-router";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import * as collect from "./collect";
 import { routes } from "../router";
 import { initialProgress, useProgress } from "../state/progress";
 import { FeedbackPayload } from "./payload";
@@ -95,6 +96,39 @@ describe("Feedback dialog", () => {
     await openTopBar();
     expect(box()).toHaveValue("keep me");
     expect(within(dialog()).getByRole("radio", { name: "Wrong answer" })).toBeChecked();
+  });
+
+  it("keeps Send disabled after closing and reopening mid-send, and sends once", async () => {
+    let resolve!: (r: Response) => void;
+    fetchMock.mockReturnValue(new Promise<Response>((r) => (resolve = r)));
+    renderAt("/ccarf/plan");
+    await openTopBar();
+    await fill();
+    await userEvent.click(send());
+    expect(send()).toBeDisabled();
+    await userEvent.click(within(dialog()).getByRole("button", { name: "Close" }));
+    await openTopBar();
+    expect(send()).toBeDisabled();
+    expect(send()).toHaveTextContent("Sending…");
+    resolve(reply(201));
+    await waitFor(() => expect(send()).toHaveTextContent(/^Send$/));
+    expect(box()).toHaveValue("");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+
+  it("ends in the failed state and keeps the draft when building the payload throws", async () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => "x");
+    vi.spyOn(collect, "buildPayload").mockImplementationOnce(() => {
+      throw new Error("boom");
+    });
+    renderAt("/ccarf/plan");
+    await openTopBar();
+    await fill("keep me");
+    await userEvent.click(send());
+    expect(await screen.findByText(/Couldn't send your report/)).toBeInTheDocument();
+    expect(box()).toHaveValue("keep me");
+    expect(send()).toBeEnabled();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it("explains a rate limit", async () => {
