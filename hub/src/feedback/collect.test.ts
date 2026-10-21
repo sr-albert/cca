@@ -32,9 +32,9 @@ describe("contextFor", () => {
 describe("studySummary", () => {
   it("counts answered and correct for the cert and overall", () => {
     const ccarf = questionsByCert.ccarf;
-    const other = Object.values(questionsByCert).flat().find((q) => q.cert !== "ccarf")!;
+    // Overall counts are keyed by answer ID, so a fake ID stands in for another cert without needing the mirror.
     const s = studySummary(
-      { answers: { [ccarf[0].id]: ans(true), [ccarf[1].id]: ans(false), [other.id]: ans(true) }, tourSeen: true },
+      { answers: { [ccarf[0].id]: ans(true), [ccarf[1].id]: ans(false), "MIRROR-X1": ans(true) }, tourSeen: true },
       "ccarf",
     );
     expect(s.cert).toEqual({ answered: 2, correct: 1, total: ccarf.length });
