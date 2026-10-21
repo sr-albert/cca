@@ -106,17 +106,50 @@ describe("POST /api/feedback", () => {
 
   it("does not run two delivery passes at once", async () => {
     await start();
+    post.mockRejectedValue(new Error("down"));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    await send(samplePayload());
+    await send(samplePayload());
+    await vi.waitFor(() => expect(post).toHaveBeenCalledTimes(2));
+    await vi.waitFor(() => expect(console.error).toHaveBeenCalledTimes(2));
+    let release: (id: string) => void = () => {};
+    post.mockReset();
+    post.mockReturnValueOnce(new Promise((r) => (release = r)));
+    post.mockResolvedValue("m-2");
+    const first = app.deliverPending();
+    await vi.waitFor(() => expect(post).toHaveBeenCalledTimes(1));
+    await app.deliverPending();
+    expect(post).toHaveBeenCalledTimes(1);
+    release("m-1");
+    await first;
+    expect(post).toHaveBeenCalledTimes(2);
+    expect(store.all().map((r) => r.delivery)).toEqual(["delivered", "delivered"]);
+  });
+
+  it("does not repost a report that was delivered while a retry pass was running", async () => {
+    await start();
     post.mockRejectedValueOnce(new Error("down"));
     vi.spyOn(console, "error").mockImplementation(() => {});
     await send(samplePayload());
     await vi.waitFor(() => expect(console.error).toHaveBeenCalled());
-    let release: (id: string) => void = () => {};
-    post.mockReturnValueOnce(new Promise((r) => (release = r)));
-    const first = app.deliverPending();
-    const second = app.deliverPending();
-    release("m-2");
-    await Promise.all([first, second]);
-    expect(post).toHaveBeenCalledTimes(2);
+
+    const calls: string[] = [];
+    const releases: Record<string, (id: string) => void> = {};
+    post.mockImplementation((_url, msg) => {
+      calls.push(msg.attachment.name);
+      return new Promise((r) => (releases[msg.attachment.name] = r));
+    });
+    // FB-0002 is submitted and its own post is still pending when the retry pass snapshots both reports.
+    await send(samplePayload());
+    await vi.waitFor(() => expect(calls).toEqual(["report-FB-0002.json"]));
+    const pass = app.deliverPending();
+    await vi.waitFor(() => expect(calls).toHaveLength(2));
+    releases["report-FB-0002.json"]("m-2");
+    await vi.waitFor(() => expect(store.all()[1].delivery).toBe("delivered"));
+    releases["report-FB-0001.json"]("m-1");
+    await pass;
+    expect(calls.sort()).toEqual(["report-FB-0001.json", "report-FB-0002.json"]);
+    expect(store.all().map((r) => r.delivery)).toEqual(["delivered", "delivered"]);
   });
 
   it("marks reports disabled and never posts without a webhook", async () => {

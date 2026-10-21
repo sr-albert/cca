@@ -57,6 +57,8 @@ export function createApp({ config, store, post = postToDiscord, now = () => new
   // Never log the webhook URL or the IP: the error from postToDiscord is already scrubbed.
   async function deliver(report: StoredReport): Promise<boolean> {
     if (!config.webhookUrl || inFlight.has(report.id)) return false;
+    // A retry pass works from a snapshot: re-read the status so a report delivered meanwhile is not posted twice.
+    if (store.all().find((r) => r.id === report.id)?.delivery !== "undelivered") return true;
     inFlight.add(report.id);
     try {
       const history = historyLine(reporterHistory(store.all(), report));
