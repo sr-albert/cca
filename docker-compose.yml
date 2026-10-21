@@ -26,6 +26,7 @@ services:
     image: node:22-alpine
     working_dir: /app/hub
     command: sh -c "npm ci && npm run dev -- --host 0.0.0.0"
+    depends_on: [feedback-dev]
     environment:
       FEEDBACK_URL: http://feedback-dev:8787
     ports:

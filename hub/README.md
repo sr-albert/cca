@@ -20,7 +20,7 @@ To send reports to Discord, create its settings from the example (the file is gi
 
     cp hub/server/feedback.env.example hub/server/feedback.env   # then fill in DISCORD_WEBHOOK_URL and IP_HASH_SECRET
 
-Without the file the service still runs and stores reports; Discord delivery is off and the IP hash secret is generated per start.
+Without the file the service still runs and stores reports; Discord delivery is off and the IP hash secret is generated once and kept in the data volume as `ip-hash.secret`.
 Reports live in the `feedback_data` volume as `reports.json`. In dev, `hub-dev` proxies `/api` to `feedback-dev`
 (`npm run dev` without Docker proxies to `localhost:8787`; start the service with `npm run server`).
 
