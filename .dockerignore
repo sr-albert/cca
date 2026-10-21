@@ -7,3 +7,4 @@ reference
 docs
 .playwright-mcp
 **/.DS_Store
+hub/server/feedback.env
