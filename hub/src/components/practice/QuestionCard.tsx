@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Answer, Question } from "../../data/schema";
+import { useFeedback } from "../../feedback/FeedbackProvider";
 import { toggleSelection } from "../../lib/practice";
 import { Html } from "../Html";
 
@@ -9,6 +10,7 @@ const SOURCE_LABEL = { mine: "Mine", official: "Official sample", mirror: "Cert 
 type Props = { q: Question; answer?: Answer; onSubmit: (selected: number[]) => void };
 
 export function QuestionCard({ q, answer, onSubmit }: Props) {
+  const feedback = useFeedback();
   const [picked, setPicked] = useState<number[]>([]);
   const multi = q.kind === "multi";
   const need = q.correct.length;
@@ -25,6 +27,11 @@ export function QuestionCard({ q, answer, onSubmit }: Props) {
           <span className={`font-semibold ${answer.correct ? "text-good" : "text-bad"}`}>
             {answer.correct ? "Correct" : "Incorrect"}
           </span>
+        )}
+        {feedback && (
+          <button type="button" onClick={() => feedback.open(q)} className="ml-auto hover:text-accent">
+            ⚑ Report
+          </button>
         )}
       </div>
       <Html className="content font-serif text-[17px] leading-relaxed" html={q.stem} />

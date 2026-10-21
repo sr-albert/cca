@@ -6,6 +6,7 @@ import { useProgress } from "../state/progress";
 import { PlanPane } from "./plan/PlanPane";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
+import { FeedbackProvider } from "../feedback/FeedbackProvider";
 import { TourLauncher } from "../tour/TourLauncher";
 
 export function Layout() {
@@ -20,6 +21,7 @@ export function Layout() {
   if (!cert) return <Navigate to="/ccarf" replace />;
   return (
     <TourLauncher cert={cert}>
+    <FeedbackProvider cert={cert}>
     <div className="flex min-h-screen">
       <Sidebar cert={cert} />
       <div className="flex min-w-0 flex-1 flex-col">
@@ -32,6 +34,7 @@ export function Layout() {
         </div>
       </div>
     </div>
+    </FeedbackProvider>
     </TourLauncher>
   );
 }
