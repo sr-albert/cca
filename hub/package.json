@@ -14,7 +14,9 @@
     "test": "vitest run",
     "pretypecheck": "npm run extract",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "server": "tsx watch server/main.ts",
+    "server:start": "tsx server/main.ts"
   },
   "dependencies": {
     "driver.js": "^1.9.0",

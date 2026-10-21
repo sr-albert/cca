@@ -4,3 +4,4 @@ mirror/
 hub/node_modules/
 hub/dist/
 hub/src/data/generated/
+hub/server/feedback.env
